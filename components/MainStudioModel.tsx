@@ -122,36 +122,30 @@ export function MainStudioModel({
         );
     });
   });
-  useGSAP(() => {
-    if (window.innerWidth > 768) return;
-    for (let i = 0; i < meshRefs.current.length; i++) {
-      const mesh = meshRefs.current[i];
+  useEffect(() => {
+    // Selecting a piece works on desktop and mobile without accumulating drift.
+    meshRefs.current.forEach((mesh,i) => {
       if (!mesh) return;
-      switch (currentIndex) {
-        case 0:
-          gsap.to(mesh.position, { x: mesh.position.x - 0.65 });
-          gsap.to(mesh.rotation, { y: 0 });
-          gsap.to(meshRefs.current[0]!.position, { z: 0 });
-          gsap.to(meshRefs.current[1]!.position, { z: -0.45 });
-          setEnvMaterial(mats.whiteStudio);
-          break;
-        case 1:
-          gsap.to(mesh.position, {
-            x: shirts[i].position[0],
-            z: shirts[i].position[2],
-          });
-          setEnvMaterial(mats.redStudio);
-          break;
-        case 2:
-          gsap.to(mesh.position, { x: mesh.position.x + 0.65 });
-          gsap.to(mesh.rotation, { y: 0 });
-          gsap.to(meshRefs.current[2]!.position, { z: 0 });
-          gsap.to(meshRefs.current[1]!.position, { z: -0.45 });
-          setEnvMaterial(mats.grayStudio);
-          break;
-      }
-    }
-  }, [currentIndex]);
+      const active = i === currentIndex;
+      gsap.to(mesh.position, {
+        x: shirts[i].position[0],
+        y: active ? shirts[i].position[1]+0.035 : shirts[i].position[1],
+        z: active ? 0.2 : shirts[i].position[2]-0.12,
+        duration: 0.85, ease: "power3.out", overwrite: true,
+      });
+      gsap.to(mesh.rotation, {
+        y: active ? 0 : shirts[i].rotation[1],
+        duration: 0.85, ease:"power3.out", overwrite: true,
+      });
+      gsap.to(mesh.scale, {
+        x: active ? 1.12 : 0.94,
+        y: active ? 1.12 : 0.94,
+        z: active ? 1.12 : 0.94,
+        duration: 0.85, ease:"power3.out",overwrite:true,
+      });
+    });
+    setEnvMaterial(currentIndex === 0 ? mats.whiteStudio : currentIndex === 2 ? mats.grayStudio : mats.redStudio);
+  }, [currentIndex, shirts, mats.whiteStudio, mats.grayStudio, mats.redStudio]);
   function enterHandler(index: number, material: THREE.MeshBasicMaterial) {
     document.body.style.cursor = "pointer";
     setEnvMaterial(material);
