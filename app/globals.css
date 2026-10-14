@@ -1,14 +1,51 @@
 @import "tailwindcss";
-
-:root {
-  --background: #000;
-  overflow-x: hidden;
+:root {--background:#050505;--foreground:#f7f7f7;overflow-x:hidden}
+html{scroll-behavior:smooth}
+body{background:var(--background);color:var(--foreground);overflow-x:hidden}
+button,a{touch-action:manipulation}
+button:focus-visible,a:focus-visible{outline:3px solid #ff374c;outline-offset:4px}
+@utility hover-animation{@apply cursor-pointer opacity-75 hover:opacity-100 transition-opacity duration-100}
+.stryde-nav{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;gap:clamp(12px,3vw,45px);padding:22px clamp(20px,5vw,70px);background:linear-gradient(to bottom,rgba(0,0,0,.83),transparent);color:white}
+.stryde-wordmark{font-size:clamp(18px,2vw,25px);font-weight:900;letter-spacing:.24em;text-decoration:none;white-space:nowrap}
+.stryde-nav-links{display:flex;align-items:center;gap:clamp(12px,2vw,32px);margin-left:auto}
+.stryde-nav-links a{font-size:12px;letter-spacing:.08em;text-decoration:none;white-space:nowrap}
+.stryde-nav-links a:hover{text-decoration:underline;text-underline-offset:6px}
+.stryde-nav-light{color:#111;background:linear-gradient(to bottom,#ffffffdc,transparent)}
+.stryde-footer{position:fixed;bottom:0;left:0;right:0;z-index:30;display:flex;justify-content:space-between;gap:12px;padding:15px clamp(20px,5vw,70px);font-size:10px;letter-spacing:.16em;pointer-events:none;color:#eee}
+.stryde-footer-light{color:#151515}
+.stryde-home{position:relative;min-height:100svh;background:radial-gradient(ellipse at center,#27090c 0%,#0b0809 48%,#030303 85%);overflow:hidden}
+.stryde-home-scene{position:absolute;inset:0;z-index:1}
+.stryde-home-copy{position:absolute;z-index:10;left:clamp(22px,5vw,80px);top:25%;width:min(380px,34vw);pointer-events:none;text-shadow:0 3px 20px #000}
+.stryde-home-copy a{pointer-events:auto}
+.stryde-kicker{display:flex;align-items:center;gap:12px;font-size:10px;letter-spacing:.24em;font-weight:700}
+.stryde-kicker:before{content:"";display:block;width:27px;height:2px;background:#ef1730}
+.stryde-home-copy h1{font-size:clamp(38px,4.6vw,76px);letter-spacing:-.07em;line-height:.95;font-weight:900;margin:22px 0}
+.stryde-home-copy h1 span{color:#f12a40;display:block}
+.stryde-home-copy p{font-size:clamp(13px,1.2vw,16px);line-height:1.7;max-width:320px;color:#dbd7d8}
+.stryde-cta{display:inline-flex;align-items:center;min-height:46px;margin-top:23px;padding:12px 20px;text-decoration:none;letter-spacing:.13em;font-size:11px;font-weight:700;background:#ef1730;color:#fff;border:1px solid #ef1730;transition:background .2s}
+.stryde-cta:hover{background:#b80b24}
+.stryde-piece-nav{position:absolute;z-index:20;right:clamp(24px,5vw,80px);top:42%;display:grid;justify-items:center;gap:12px}
+.stryde-piece-nav button{width:48px;height:48px;display:grid;place-items:center;border:1px solid #ffffff70;background:#0b0b0ba6;border-radius:50%;font-size:20px;color:#fff;cursor:pointer}
+.stryde-piece-nav button:disabled{opacity:.3;cursor:not-allowed}
+.stryde-piece-nav span{font-size:12px;letter-spacing:.2em}
+.stryde-piece-nav a{font-size:10px;font-weight:800;text-decoration:underline;text-underline-offset:5px;letter-spacing:.12em;white-space:nowrap}
+.stryde-home-note{position:absolute;z-index:10;bottom:75px;left:clamp(22px,5vw,80px);font-size:10px;letter-spacing:.2em;color:#ddd}
+.stryde-collection{position:relative;z-index:2;background:#09090a;padding:85px clamp(22px,5vw,80px) 120px}
+.stryde-collection h2{font-size:clamp(32px,4vw,58px);letter-spacing:-.055em;font-weight:900;line-height:1.12;margin:17px 0 32px}
+.stryde-collection-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.stryde-collection-grid a{display:flex;min-height:230px;flex-direction:column;justify-content:flex-end;gap:18px;padding:27px;position:relative;overflow:hidden;text-decoration:none;border:1px solid #ffffff30;background:linear-gradient(135deg,#351117,#101012 65%,#050505);transition:transform .2s,border-color .2s}
+.stryde-collection-grid a:nth-child(2){background:linear-gradient(135deg,#202027,#621321 68%,#080808)}
+.stryde-collection-grid a:nth-child(3){background:linear-gradient(135deg,#4b4b4f,#1b1b21 70%,#050505)}
+.stryde-collection-grid a:hover{transform:translateY(-4px);border-color:#f12a40}
+.stryde-collection-grid strong{font-size:clamp(23px,2.4vw,35px);letter-spacing:-.04em}
+.stryde-collection-grid small{font-size:11px;letter-spacing:.17em}
+@media(max-width:800px){
+ .stryde-nav{padding:16px 20px}.stryde-nav-links{gap:12px}.stryde-nav-links a{font-size:11px}
+ .stryde-home{min-height:800px}.stryde-home-copy{top:auto;bottom:158px;width:min(490px,78vw)}
+ .stryde-home-copy h1{font-size:clamp(44px,10vw,70px);margin:11px 0}
+ .stryde-home-copy p{font-size:13px}.stryde-cta{margin-top:12px}
+ .stryde-piece-nav{top:37%;right:16px}.stryde-home-note{bottom:90px;font-size:9px}
+ .stryde-collection-grid{grid-template-columns:1fr}.stryde-collection-grid a{min-height:160px}
+ .stryde-footer{padding:12px 20px;font-size:9px}.stryde-footer span:last-child{display:none}
 }
-
-body {
-  background: var(--background);
-}
-
-@utility hover-animation {
-  @apply cursor-pointer opacity-75 hover:opacity-100 transition-opacity duration-100;
-}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important}}
