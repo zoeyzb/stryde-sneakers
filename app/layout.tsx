@@ -10,9 +10,9 @@ const mulish = Mulish({
 });
 
 export const metadata: Metadata = {
-  title: "adidas",
+  title: "Stryde | Interactive Sportswear Studio",
   description:
-    "Foot Locker and adidas Originals' latest collection breaks new ground.",
+    "Stryde is an immersive interactive 3D sportswear concept.",
 };
 
 export default function RootLayout({

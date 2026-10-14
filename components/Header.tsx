@@ -13,10 +13,10 @@ const Header = () => {
           replace("/");
         }}
         className={clsx(
-          "mask-[url(/icons/footLocker.svg)] md:w-44 w-40 h-16 mask-no-repeat hover-animation ",
+           "md:w-44 w-40 h-16 flex items-center text-2xl font-bold tracking-widest hover-animation ",
           color
         )}
-      />
+      >STRYDE</div>
       <MusicStreamLine color={color} />
     </div>
   );
