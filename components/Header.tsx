@@ -1,25 +1,14 @@
 "use client";
-import clsx from "clsx";
-import { useParams, useRouter } from "next/navigation";
-import MusicStreamLine from "./MusicStreamLine";
-
-const Header = () => {
-  const color = useParams()?.slug === "white" ? "text-black" : "text-white";
-  const { replace } = useRouter();
-  return (
-    <div className="fixed z-10 flex justify-between items-center w-full md:pt-10 pt-3 md:px-20 px-5">
-      <div
-        onClick={() => {
-          replace("/");
-        }}
-        className={clsx(
-           "md:w-44 w-40 h-16 flex items-center text-2xl font-bold tracking-widest cursor-pointer hover-animation ",
-          color
-        )}
-       role="button" tabIndex={0} onKeyDown={(event) => { if (event.key === "Enter") replace("/"); }}>STRYDE</div>
-      <MusicStreamLine color={color} />
-    </div>
-  );
-};
-
-export default Header;
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+export default function Header() {
+ const pathname=usePathname();
+ return <header style={{position:"absolute",top:0,left:0,right:0,zIndex:30,display:"flex",alignItems:"center",justifyContent:"space-between",padding:"22px 5%",background:"linear-gradient(#050506d9,transparent)",borderBottom:"1px solid #ffffff16"}}>
+   <Link href="/" aria-label="STRYDE home" style={{color:"#fff",textDecoration:"none",fontWeight:900,letterSpacing:".36em",fontSize:22}}>STRYDE</Link>
+   <nav aria-label="Main navigation" style={{display:"flex",gap:"clamp(16px,3vw,42px)",alignItems:"center"}}>
+     <Link href="/#collection" style={{color:"#fff",fontSize:13,textDecoration:"none"}}>Collections</Link>
+     <Link href="/shirts/sport" style={{color:"#fff",fontSize:13,textDecoration:"none"}}>Performance</Link>
+     {pathname!=="/"&&<Link href="/" style={{color:"#fff",fontSize:13,textDecoration:"none"}}>Back to studio</Link>}
+   </nav>
+ </header>
+}
