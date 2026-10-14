@@ -11,10 +11,10 @@ const Footer = () => {
         color
       )}
     >
-      <p className="hover-animation">© 2025 ADIDAS AG</p>
-      <p className="hover-animation">TERMS & CONDITIONS</p>
-      <p className="hover-animation">PRIVACY</p>
-      <p className="hover-animation">COOKIES</p>
+      <p className="hover-animation">© 2026 STRYDE — Performance Wear Concept</p>
+      <p className="hover-animation">INTERACTIVE DESIGN CONCEPT</p>
+      
+      
     </div>
   );
 };
