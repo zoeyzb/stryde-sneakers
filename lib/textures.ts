@@ -24,7 +24,7 @@ export const studioTextures = {
       third: {
         normal: "/textures/FloorNormal.png",
         overlay: "/textures/SmudgesOverlay.jpg",
-        icon: "/textures/adidas.png",
+        icon: "/textures/stryde-mark.png",
       },
     },
     gray: {
@@ -41,7 +41,7 @@ export const studioTextures = {
       third: {
         normal: "/textures/FloorNormal.png",
         overlay: "/textures/SmudgesOverlay.jpg",
-        icon: "/textures/adidas.png",
+        icon: "/textures/stryde-mark.png",
       },
     },
     sport: {
@@ -58,7 +58,7 @@ export const studioTextures = {
       third: {
         normal: "/textures/FloorNormal.png",
         overlay: "/textures/SmudgesOverlay.jpg",
-        icon: "/textures/adidas.png",
+        icon: "/textures/stryde-mark.png",
       },
     },
   },

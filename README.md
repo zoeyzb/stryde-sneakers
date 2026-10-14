@@ -1,4 +1,6 @@
-# Awwwards-Winning 3D adidas Landing Page (Next.js + Three.js)
+Adapted from the original 3D apparel template by Ali-Sanati. Original assets and licenses require review before commercial reuse.
+
+# STRYDE — Interactive Performance Apparel Concept
 
 
 <div style="display: flex; flex-direction: column; width: 100%; gap: 20px; align-items: center;"> 
