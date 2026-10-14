@@ -7,11 +7,7 @@ import { useMediaQuery } from "react-responsive";
 
 import { shirtColors } from "@/lib/colors";
 import { ShirtType, TextureKey } from "@/lib/textures";
-import {
-  useShirtEnvCube,
-  useShirtSectionTextures,
-  useShirtVideoTexture,
-} from "@/lib/useTextures";
+import { useShirtEnvCube, useShirtSectionTextures } from "@/lib/useTextures";
 import Masking from "./Masking";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -29,8 +25,7 @@ const ThirdModel = ({ shirtType }: { shirtType: ShirtType }) => {
   >;
 
   const envMap = useShirtEnvCube(shirtType);
-  const video = useShirtVideoTexture(shirtType);
-  console.log(envMap);
+
   useGSAP(() => {
     if (!groupRef.current || !maskRef.current) return;
     gsap
@@ -52,7 +47,7 @@ const ThirdModel = ({ shirtType }: { shirtType: ShirtType }) => {
 
   const handleButtonClick = useCallback((e: ThreeEvent<MouseEvent>) => {
     e.stopPropagation();
-    window.open("https://www.google.com", "_blank");
+    window.location.href = "/#collection";
   }, []);
   return (
     <group>
@@ -64,7 +59,7 @@ const ThirdModel = ({ shirtType }: { shirtType: ShirtType }) => {
           position={isMobile ? [0, 0.45, 0] : [0.2, 0.65, 0]}
         >
           <planeGeometry args={[16, 9]} />
-          <meshBasicMaterial map={video} {...stencil} />
+          <meshBasicMaterial color="#16090d" {...stencil} />
         </mesh>
         <mesh position-y={0.2} rotation-x={-Math.PI / 2}>
           <planeGeometry args={[10, 3]} />
@@ -104,7 +99,7 @@ const ThirdModel = ({ shirtType }: { shirtType: ShirtType }) => {
             <planeGeometry args={[0.5, 0.2]} />
             <meshBasicMaterial
               color={getTextColor()}
-              map={textures.icon}
+              
               transparent
               {...stencil}
             />
@@ -130,7 +125,7 @@ const ThirdModel = ({ shirtType }: { shirtType: ShirtType }) => {
               anchorY={"middle"}
               position={[0, 0, 0.03]}
             >
-              SHOP THE COLLECTION
+              EXPLORE COLLECTION
               <meshBasicMaterial
                 color={getTextColor() === "black" ? "white" : "black"}
                 {...stencil}
