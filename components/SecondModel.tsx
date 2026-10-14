@@ -30,7 +30,7 @@ export function SecondModel({shirtType}:{shirtType:ShirtType}){
   <group ref={garment} position={[0,.5,0]} scale={1.35}>
    <mesh geometry={nodes.Shirt.geometry} material={mats.shirt}/>
   </group>
-  <mesh rotation={[-Math.PI/2,0,0]} position={[0,-.45,0]} {...stencil}>
+  <mesh rotation={[-Math.PI/2,0,0]} position={[0,-.45,0]}>
     <torusGeometry args={[.72,.012,8,90]}/>
     <meshBasicMaterial color="#f11730" {...stencil}/>
   </mesh>
