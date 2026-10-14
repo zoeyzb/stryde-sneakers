@@ -10,9 +10,9 @@ const mulish = Mulish({
 });
 
 export const metadata: Metadata = {
-  title: "Stryde | Interactive Sportswear Studio",
+  title: "STRYDE — Performance Apparel | Interactive 3D Collection",
   description:
-    "Stryde is an immersive interactive 3D sportswear concept.",
+    "Explore STRYDE, an interactive performance-apparel concept with immersive 3D garments and creative motion.",
 };
 
 export default function RootLayout({

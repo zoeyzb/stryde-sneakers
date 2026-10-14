@@ -22,7 +22,7 @@ export default function Home() {
         />
       </View>
       <p className="absolute z-10 top-11/12 place-self-center text-white/80 md:text-xs text-[10px] font-medium tracking-wider">
-        SELECT A PRODUCT TO BEGIN
+        STRYDE / PERFORMANCE COLLECTION — SELECT A PIECE
       </p>
       <div
         id="left-icon"
