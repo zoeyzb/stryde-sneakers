@@ -23,12 +23,17 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@gltf-transform/core": "^4.5.1",
+    "@gltf-transform/extensions": "^4.5.1",
+    "@gltf-transform/functions": "^4.5.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "draco3dgltf": "^1.5.9",
     "eslint": "^9",
     "eslint-config-next": "15.5.27",
+    "puppeteer-core": "^25.16.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
