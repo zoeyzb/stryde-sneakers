@@ -1,12 +1,16 @@
 {
-  "name": "stryde-performance",
+  "name": "stryde",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "dev:mock": "SHOPIFY_STORE_DOMAIN=mock.shop next dev --turbopack",
+    "build:mock": "SHOPIFY_STORE_DOMAIN=mock.shop next build --turbopack",
+    "start:mock": "SHOPIFY_STORE_DOMAIN=mock.shop next start",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -19,6 +23,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-responsive": "^10.0.1",
+    "server-only": "^0.0.1",
     "three": "^0.180.0"
   },
   "devDependencies": {
