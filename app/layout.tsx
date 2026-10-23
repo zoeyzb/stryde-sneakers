@@ -1,19 +1,30 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Mulish } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
-import ViewCanvas from "@/components/ViewCanvas";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import { CartProvider } from "@/components/cart/CartProvider";
+import CartDrawer from "@/components/cart/CartDrawer";
+import { getSiteUrl } from "@/lib/shopify/config";
 
-const mulish = Mulish({
-  subsets: ["cyrillic"],
+const mulish = Mulish({ subsets: ["latin"], variable: "--font-mulish" });
+const syncopate = localFont({
+  src: "../public/fonts/Syncopate-Bold.ttf",
+  variable: "--font-syncopate",
+  weight: "700",
 });
 
 export const metadata: Metadata = {
-  title: "STRYDE — Performance Apparel | Interactive 3D Collection",
+  metadataBase: new URL(getSiteUrl()),
+  title: {
+    default: "STRYDE — Luxury Streetwear",
+    template: "%s — STRYDE",
+  },
   description:
-    "Explore STRYDE, an interactive performance-apparel concept with immersive 3D garments and creative motion.",
+    "STRYDE is a luxury streetwear studio. Explore the collection in 3D and shop tees, hoodies, jackets and pants.",
+  openGraph: { siteName: "STRYDE", type: "website" },
 };
+
+export const viewport: Viewport = { themeColor: "#0a0a0a" };
 
 export default function RootLayout({
   children,
@@ -22,11 +33,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${mulish.className} antialiased`}>
-        <ViewCanvas />
-        <Header />
-        {children}
-        <Footer />
+      <body className={`${mulish.variable} ${syncopate.variable} font-sans antialiased`}>
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:z-[100] focus:top-3 focus:left-3 focus:bg-ivory focus:text-ink focus:px-4 focus:py-2 eyebrow"
+        >
+          Skip to content
+        </a>
+        <CartProvider>
+          {children}
+          <CartDrawer />
+        </CartProvider>
       </body>
     </html>
   );

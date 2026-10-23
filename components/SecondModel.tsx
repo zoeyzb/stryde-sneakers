@@ -202,7 +202,7 @@ export function SecondModel({ shirtType }: { shirtType: ShirtType }) {
               letterSpacing={0.12}
               anchorX="center"
               anchorY="middle"
-              curveRadius={-line.radius}
+              {...{ curveRadius: -line.radius }}
               position={[0, line.y, line.radius]}
               material={textsMaterial}
             >

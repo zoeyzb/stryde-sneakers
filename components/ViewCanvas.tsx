@@ -19,13 +19,14 @@ const ViewCanvas = () => {
       camera={{ position: [0, 0.7, 3], fov: 30 }}
       eventSource={eventSource ?? undefined}
       eventPrefix="client"
-      gl={{ stencil: true }}
+      dpr={[1, 1.5]}
+      gl={{ stencil: true, powerPreference: "high-performance" }}
+      aria-hidden
     >
       <AssetsPreload />
       <Suspense fallback={<LoadingSkeleton />}>
         <View.Port />
       </Suspense>
-      {/* <OrbitControls /> */}
       <Rig />
     </Canvas>
   );

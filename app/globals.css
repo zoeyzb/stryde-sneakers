@@ -1,14 +1,104 @@
 @import "tailwindcss";
 
+@theme {
+  --color-ink: #0a0a0a;
+  --color-ink-2: #141414;
+  --color-ink-3: #1f1f1f;
+  --color-ivory: #f3efe7;
+  --color-mist: #a8a39a;
+  --color-line: rgb(243 239 231 / 0.14);
+  --color-oxblood: #8c1c1c;
+  --font-display: var(--font-syncopate), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-mulish), ui-sans-serif, system-ui, sans-serif;
+  --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 :root {
   --background: #000;
   overflow-x: hidden;
+  color-scheme: dark;
 }
 
 body {
   background: var(--background);
+  color: var(--color-ivory);
+}
+
+::selection {
+  background: var(--color-ivory);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 1px solid var(--color-ivory);
+  outline-offset: 3px;
 }
 
 @utility hover-animation {
   @apply cursor-pointer opacity-75 hover:opacity-100 transition-opacity duration-100;
+}
+
+@utility eyebrow {
+  @apply font-display text-[10px] tracking-[0.32em] uppercase;
+}
+
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 px-6 h-12 font-display text-[10px] tracking-[0.28em] uppercase transition-colors duration-300 ease-luxe disabled:cursor-not-allowed;
+}
+
+@utility btn-primary {
+  @apply btn bg-ivory text-ink hover:bg-white disabled:bg-ink-3 disabled:text-mist;
+}
+
+@utility btn-ghost {
+  @apply btn border border-line text-ivory hover:border-ivory disabled:opacity-50;
+}
+
+@utility field {
+  @apply w-full h-12 bg-transparent border border-line px-4 text-sm text-ivory placeholder:text-mist/70 focus:border-ivory focus:outline-none transition-colors;
+}
+
+.prose-stryde {
+  @apply text-sm leading-7 text-ivory/80;
+}
+.prose-stryde h1,
+.prose-stryde h2,
+.prose-stryde h3 {
+  @apply font-display text-ivory tracking-[0.12em] uppercase mt-10 mb-4 text-xs;
+}
+.prose-stryde p,
+.prose-stryde ul,
+.prose-stryde ol,
+.prose-stryde table {
+  @apply mb-5;
+}
+.prose-stryde ul {
+  @apply list-disc pl-5;
+}
+.prose-stryde ol {
+  @apply list-decimal pl-5;
+}
+.prose-stryde a {
+  @apply underline underline-offset-4 decoration-ivory/40 hover:decoration-ivory;
+}
+.prose-stryde strong {
+  @apply text-ivory font-semibold;
+}
+.prose-stryde table {
+  @apply w-full text-left border-collapse;
+}
+.prose-stryde th,
+.prose-stryde td {
+  @apply border-b border-line py-2 pr-4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

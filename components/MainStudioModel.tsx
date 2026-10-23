@@ -8,6 +8,7 @@ import gsap from "gsap";
 import { useMainStudioTextures } from "@/lib/useTextures";
 import { studioTextures } from "@/lib/textures";
 import { createMaterials } from "@/lib/material";
+import { prefersReducedMotion } from "@/lib/useReducedMotion";
 
 type GLTFResult = {
   nodes: {
@@ -75,7 +76,7 @@ export function MainStudioModel({
 
   useGSAP(() => {
     const hasAnimationRun = sessionStorage.getItem("mainStudioAnimationRan");
-    if (!groupRef.current || hasAnimationRun) return;
+    if (!groupRef.current || hasAnimationRun || prefersReducedMotion()) return;
     gsap.from(groupRef.current.position, {
       y: -0.15,
       z: 2,
@@ -85,7 +86,7 @@ export function MainStudioModel({
         sessionStorage.setItem("mainStudioAnimationRan", "true");
       },
     });
-    meshRefs.current.forEach((shirt, i) => {
+    meshRefs.current.forEach((shirt) => {
       if (!shirt) return;
       gsap.from(shirt.position, {
         x: shirt.position.x * 2,

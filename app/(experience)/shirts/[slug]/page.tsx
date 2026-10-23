@@ -1,19 +1,28 @@
-"use client";
-import { notFound, useParams } from "next/navigation";
-import Scene from "@/components/Scene";
-import { ShirtType } from "@/lib/textures";
-import ScrollIndicator from "@/components/ScrollIndicator";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import ShirtExperience from "@/components/ShirtExperience";
+import { GARMENTS, garmentName } from "@/lib/garments";
+import type { ShirtType } from "@/lib/textures";
 
-const Page = () => {
-  const params = useParams();
-  const shirtType = params?.slug as ShirtType;
-  if (!shirtType) return notFound();
-  return (
-    <>
-      <Scene shirtType={shirtType} />
-      <ScrollIndicator shirtType={shirtType} />
-    </>
-  );
-};
+type Params = Promise<{ slug: string }>;
 
-export default Page;
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return GARMENTS.map((g) => ({ slug: g.slug }));
+}
+
+export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
+  const { slug } = await params;
+  return {
+    title: `${garmentName(slug as ShirtType)} — 3D studio`,
+    description: `Explore the STRYDE ${garmentName(slug as ShirtType)} piece in an interactive 3D studio.`,
+  };
+}
+
+export default async function ShirtPage({ params }: { params: Params }) {
+  const { slug } = await params;
+  const garment = GARMENTS.find((g) => g.slug === slug);
+  if (!garment) notFound();
+  return <ShirtExperience shirtType={garment.slug} />;
+}
