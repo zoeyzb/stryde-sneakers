@@ -32,8 +32,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${mulish.variable} ${syncopate.variable} font-sans antialiased`}>
+    <html lang="en" className={`${mulish.variable} ${syncopate.variable}`}>
+      <body className="font-sans antialiased">
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:z-[100] focus:top-3 focus:left-3 focus:bg-ivory focus:text-ink focus:px-4 focus:py-2 eyebrow"

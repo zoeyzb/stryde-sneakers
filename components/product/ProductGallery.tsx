@@ -29,7 +29,7 @@ export default function ProductGallery({
   const hero = images[active] ?? images[0];
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 min-w-0">
       <div className="relative aspect-[4/5] bg-ink-2 overflow-hidden">
         {show3D && scene ? (
           <ProductViewer3D scene={scene} label={`Interactive 3D view of ${title}`} />

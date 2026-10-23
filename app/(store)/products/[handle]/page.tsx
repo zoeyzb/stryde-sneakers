@@ -141,7 +141,7 @@ export default async function ProductPage({ params }: { params: Params }) {
       </nav>
       <div className="grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
         <ProductGallery images={images} title={product.title} scene={scene} soldOut={!product.availableForSale} />
-        <div className="lg:sticky lg:top-24 self-start">
+        <div className="lg:sticky lg:top-24 self-start min-w-0">
           <Suspense>
             <ProductForm product={product} />
           </Suspense>
