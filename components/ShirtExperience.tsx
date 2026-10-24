@@ -20,13 +20,13 @@ export default function ShirtExperience({ shirtType }: { shirtType: ShirtType })
       <Scene shirtType={shirtType} />
       <ScrollIndicator shirtType={shirtType} />
       <Link
-        href={`/products/${PRODUCT[shirtType]}`}
+        href={`/products/${PRODUCT[shirtType]}#purchase`}
         className={clsx(
           "fixed z-20 bottom-3 right-5 md:right-20 eyebrow text-[9px] px-4 py-2.5 transition-colors",
           light ? "bg-black text-white hover:bg-black/80" : "bg-white text-black hover:bg-white/85"
         )}
       >
-        Explore {garmentName(shirtType)} piece ↗
+        Choose size · Add to bag ↗
       </Link>
     </>
   );
