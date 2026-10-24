@@ -42,13 +42,18 @@ export default async function ProductPage({ params }: { params: Params }) {
       {scene && (
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-y border-line py-5">
           <p className="text-xs text-mist">Part of the original three-world 3D collection</p>
-          <Link href={`/shirts/${scene}`} className="eyebrow hover:text-mist">Enter the full scroll experience ↗</Link>
+          <Link href={`/shirts/${scene}`} className="eyebrow hover:text-mist">← Back to the 3D studio</Link>
         </div>
       )}
       <div className="grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
         <ProductGallery images={product.gallery.nodes} title={product.title} scene={scene} soldOut={!product.availableForSale} />
-        <div className="lg:sticky lg:top-24 self-start min-w-0">
+        <div id="purchase" className="lg:sticky lg:top-24 self-start min-w-0 scroll-mt-28">
           <Suspense><ProductForm product={product} /></Suspense>
+          {scene && (
+            <Link href={`/shirts/${scene}`} className="mt-5 inline-block eyebrow text-mist hover:text-ivory transition-colors">
+              ← Return to the {product.collections.nodes[0].title} 3D world
+            </Link>
+          )}
           <div className="mt-10 border-t border-line">
             <details className="border-b border-line" open>
               <summary className="py-5 cursor-pointer eyebrow">Description</summary>
