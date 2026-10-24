@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import clsx from "clsx";
 import { useCart } from "@/components/cart/CartProvider";
 import Price from "@/components/store/Price";
@@ -38,6 +38,15 @@ export default function ProductForm({ product }: { product: Product }) {
 
   const [selection, setSelection] = useState<Selection>(initial);
   const [added, setAdded] = useState(false);
+
+  // When a visitor arrives from the 3D studio, expose size + bag controls immediately.
+  useEffect(() => {
+    if (window.location.hash !== "#purchase") return;
+    const frame = window.requestAnimationFrame(() => {
+      document.getElementById("purchase")?.scrollIntoView({ block: "start" });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
 
   const variant = variants.find((v) => v.selectedOptions.every((o) => selection[o.name] === o.value)) ?? null;
   const productSoldOut = !product.availableForSale;
