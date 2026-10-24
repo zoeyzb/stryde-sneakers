@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import ProductForm from "@/components/product/ProductForm";
 import ProductGallery from "@/components/product/ProductGallery";
+import PreviewReviews from "@/components/product/PreviewReviews";
 import ProductGrid from "@/components/store/ProductGrid";
 import { getDemoProduct, DEMO_PRODUCTS } from "@/lib/demo/catalog";
 import { HANDLE } from "@/lib/validation";
@@ -30,7 +31,7 @@ export default async function ProductPage({ params }: { params: Params }) {
   const related = DEMO_PRODUCTS.filter((item) => item.handle !== handle).slice(0, 4);
 
   return (
-    <div className="mx-auto max-w-[1600px] px-5 md:px-10 pt-6 md:pt-10">
+    <div className="mx-auto max-w-[1600px] px-5 md:px-10 pt-6 md:pt-10 pb-24 lg:pb-0">
       <nav aria-label="Breadcrumb" className="mb-6 text-xs text-mist flex gap-2">
         <Link href="/shop" className="hover:text-ivory">Shop</Link>
         <span aria-hidden>/</span>
@@ -63,6 +64,7 @@ export default async function ProductPage({ params }: { params: Params }) {
         <h2 id="related-heading" className="eyebrow text-mist mb-8">Complete the look</h2>
         <ProductGrid products={related} />
       </section>
+      <PreviewReviews handle={product.handle} />
     </div>
   );
 }
