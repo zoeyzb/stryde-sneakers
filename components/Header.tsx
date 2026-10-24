@@ -21,11 +21,8 @@ const Header = () => {
         STRYDE
       </Link>
       <nav aria-label="Primary" className={clsx("pointer-events-auto flex items-center gap-6 md:gap-8", color)}>
-        <Link href="/collections" className="eyebrow opacity-80 hover:opacity-100 transition-opacity hidden sm:inline">
-          3D worlds
-        </Link>
-        <Link href="/shop" className="eyebrow opacity-80 hover:opacity-100 transition-opacity">
-          Shop
+        <Link href="/about" className="eyebrow opacity-80 hover:opacity-100 transition-opacity">
+          Studio
         </Link>
         <BagButton />
         <MusicStreamLine color={dark ? "bg-black" : "bg-white"} />

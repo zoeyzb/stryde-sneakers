@@ -30,11 +30,15 @@ const PRODUCTS_BY_VARIANT = new Map(
 
 function safeEntries(value: unknown): Entry[] {
   if (!Array.isArray(value)) return [];
+  const seenProducts = new Set<string>();
   return value.slice(0, 50).flatMap((item): Entry[] => {
-    if (!item || typeof item.variantId !== "string" || !PRODUCTS_BY_VARIANT.has(item.variantId)) return [];
+    if (!item || typeof item.variantId !== "string") return [];
+    const found = PRODUCTS_BY_VARIANT.get(item.variantId);
+    if (!found || seenProducts.has(found.product.id)) return [];
     const quantity = Number(item.quantity);
     if (!Number.isSafeInteger(quantity) || quantity < 1 || quantity > 20) return [];
-    return [{ variantId: item.variantId, quantity }];
+    seenProducts.add(found.product.id);
+    return [{ variantId: item.variantId, quantity: 1 }];
   });
 }
 
@@ -109,23 +113,25 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       setError("Choose a valid quantity.");
       return false;
     }
+    if (entries.some((entry) => PRODUCTS_BY_VARIANT.get(entry.variantId)?.product.id === found.product.id)) {
+      setError("This piece is already in your bag. Remove it before selecting another size.");
+      return false;
+    }
     setEntries((previous) => {
-      const existing = previous.find((item) => item.variantId === variantId);
-      return existing
-        ? previous.map((item) => item.variantId === variantId ? { ...item, quantity: Math.min(20, item.quantity + quantity) } : item)
-        : [...previous, { variantId, quantity: Math.min(20, quantity) }];
+      if (previous.some((entry) => PRODUCTS_BY_VARIANT.get(entry.variantId)?.product.id === found.product.id)) return previous;
+      return [...previous, { variantId, quantity: 1 }];
     });
     setError(null);
     setIsOpen(true);
     return true;
-  }, []);
+  }, [entries]);
 
   const updateLine = useCallback((lineId: string, quantity: number) => {
     if (!Number.isSafeInteger(quantity)) return;
     const variantId = lineId.replace(/^demo-line-/, "");
     setEntries((previous) =>
       previous.flatMap((item) => item.variantId === variantId
-        ? quantity > 0 ? [{ ...item, quantity: Math.min(20, quantity) }] : []
+        ? quantity > 0 ? [{ ...item, quantity: 1 }] : []
         : [item]
       )
     );
