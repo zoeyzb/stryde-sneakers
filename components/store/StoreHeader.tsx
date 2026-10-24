@@ -6,11 +6,7 @@ import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { useCart } from "@/components/cart/CartProvider";
 
-const NAV = [
-  { href: "/collections", label: "3D Collection" },
-  { href: "/shop", label: "Shop" },
-  { href: "/about", label: "Studio" },
-];
+const NAV = [{ href: "/about", label: "Studio" }];
 
 export function BagButton({ className }: { className?: string }) {
   const { cart, open } = useCart();
