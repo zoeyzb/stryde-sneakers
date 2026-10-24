@@ -10,6 +10,7 @@ const NAV = [
   { href: "/shop", label: "Shop" },
   { href: "/collections", label: "Collections" },
   { href: "/shop?sort=newest", label: "New Arrivals" },
+  { href: "/lookbook", label: "Lookbook" },
   { href: "/about", label: "About" },
 ];
 
@@ -41,15 +42,15 @@ export default function StoreHeader() {
           <Link href="/" className="font-display text-lg tracking-[0.35em]" aria-label="STRYDE home">
             STRYDE
           </Link>
-          <nav aria-label="Primary" className="hidden md:flex gap-7">
+          <nav aria-label="Primary" className="hidden lg:flex gap-6">
             {NAV.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                aria-current={pathname.startsWith(item.href) ? "page" : undefined}
+                aria-current={pathname === item.href || (item.href !== "/" && !item.href.includes("?") && pathname.startsWith(item.href + "/")) ? "page" : undefined}
                 className={clsx(
                   "eyebrow transition-opacity",
-                  pathname.startsWith(item.href) ? "opacity-100" : "opacity-60 hover:opacity-100"
+                  pathname === item.href || (item.href !== "/" && !item.href.includes("?") && pathname.startsWith(item.href + "/")) ? "opacity-100" : "opacity-60 hover:opacity-100"
                 )}
               >
                 {item.label}
@@ -67,7 +68,7 @@ export default function StoreHeader() {
           <BagButton />
           <button
             type="button"
-            className="md:hidden eyebrow"
+            className="lg:hidden eyebrow"
             aria-expanded={menuOpen}
             aria-controls="mobile-nav"
             onClick={() => setMenuOpen((v) => !v)}
@@ -77,7 +78,7 @@ export default function StoreHeader() {
         </div>
       </div>
       {menuOpen && (
-        <nav id="mobile-nav" aria-label="Mobile" className="md:hidden border-t border-line px-5 py-6 flex flex-col gap-5">
+        <nav id="mobile-nav" aria-label="Mobile" className="lg:hidden border-t border-line px-5 py-6 flex flex-col gap-5">
           {[...NAV, { href: "/shop#search", label: "Search" }, { href: "/account", label: "Account" }].map((item) => (
             <Link key={item.href} href={item.href} className="eyebrow text-sm">
               {item.label}

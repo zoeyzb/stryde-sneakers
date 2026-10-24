@@ -40,7 +40,7 @@ export default function ProductGallery({
             fill
             priority
             sizes="(min-width: 1024px) 55vw, 100vw"
-            className={clsx("object-cover", soldOut && "grayscale-[50%] opacity-80")}
+            className={clsx("object-cover saturate-[.7] contrast-[1.04]", soldOut && "grayscale-[50%] opacity-80")}
           />
         ) : (
           <div className="absolute inset-0 grid place-items-center eyebrow text-mist">STRYDE</div>
@@ -53,10 +53,11 @@ export default function ProductGallery({
             aria-pressed={show3D}
             className="absolute right-4 top-4 z-10 eyebrow bg-ink/70 backdrop-blur-sm border border-ivory/25 px-3 py-2 hover:border-ivory"
           >
-            {show3D ? "View photos" : "View in 3D"}
+            {show3D ? "View photos" : "Explore 3D concept"}
           </button>
         )}
       </div>
+      {scene && <p className="text-[11px] leading-5 text-mist">Interactive 3D garment study. Illustrative preview, not a manufacturing-accurate product model.</p>}
       {images.length > 1 && (
         <ul className="flex gap-3 overflow-x-auto snap-x pb-1" aria-label="Product images">
           {images.map((img, i) => (
@@ -74,7 +75,7 @@ export default function ProductGallery({
                   !show3D && i === active ? "border-ivory" : "border-transparent opacity-60 hover:opacity-100"
                 )}
               >
-                <Image src={img.url} alt="" fill sizes="80px" className="object-cover" />
+                <Image src={img.url} alt="" fill sizes="80px" className="object-cover saturate-[.7] contrast-[1.04]" />
               </button>
             </li>
           ))}

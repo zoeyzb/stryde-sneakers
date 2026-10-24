@@ -22,10 +22,14 @@ export default function HomeExperience() {
         <MainStudioModel currentIndex={currentIndex} scale={isMobile ? 0.8 : 1} />
       </View>
 
-      <div className="absolute z-10 inset-x-0 bottom-12 md:bottom-14 flex flex-col items-center gap-4 pointer-events-none px-5">
+      <div className="absolute z-10 inset-x-0 bottom-6 md:bottom-12 flex flex-col items-center gap-4 pointer-events-none px-5">
         <p className="text-white/80 md:text-xs text-[10px] font-medium tracking-[0.3em] text-center">
           EXPLORE THE COLLECTION IN 3D
         </p>
+        <div className="pointer-events-auto flex items-center flex-wrap justify-center gap-3 mb-2">
+          <Link href="/shop" className="bg-white text-black px-7 py-4 text-[11px] uppercase font-semibold tracking-[.18em] hover:bg-white/85 transition-colors">Explore the drop ↗</Link>
+          <Link href="/lookbook" className="border border-white/50 backdrop-blur-md text-white px-7 py-4 text-[11px] uppercase font-semibold tracking-[.18em] hover:bg-white/10 transition-colors">The lookbook</Link>
+        </div>
         <nav aria-label="Garments" className="pointer-events-auto flex flex-wrap justify-center gap-2">
           {GARMENTS.map((g) => (
             <Link
@@ -36,12 +40,6 @@ export default function HomeExperience() {
               {g.name}
             </Link>
           ))}
-          <Link
-            href="/shop"
-            className="eyebrow text-[9px] bg-white text-black px-4 py-2 hover:bg-white/85 transition-colors"
-          >
-            Shop the collection
-          </Link>
         </nav>
       </div>
 
