@@ -17,14 +17,14 @@ export default function HomeExperience() {
   };
   return (
     <>
-      <h1 className="sr-only">STRYDE — explore the collection in 3D</h1>
+      <h1 className="sr-only">STRYDE — Volume 001</h1>
       <View className="w-full h-dvh">
         <MainStudioModel currentIndex={currentIndex} scale={isMobile ? 0.8 : 1} />
       </View>
 
       <div className="absolute z-10 inset-x-0 bottom-14 md:bottom-16 flex flex-col items-center gap-5 pointer-events-none px-5">
         <p className="text-white/80 md:text-xs text-[10px] font-medium tracking-[0.3em] text-center">
-          THREE WORLDS · CHOOSE A PIECE · SCROLL TO EXPLORE
+          VOLUME 001 · MOVE WITH INTENTION
         </p>
         <nav aria-label="Garments" className="pointer-events-auto flex flex-wrap justify-center gap-2">
           {GARMENTS.map((g) => (
