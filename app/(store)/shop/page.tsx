@@ -31,7 +31,7 @@ export default async function ShopPage({ searchParams }: { searchParams: SearchP
               Enter each interactive world, then select a size if you want to try the demo bag.
             </p>
           </div>
-          <Link href="/collections" className="eyebrow text-ivory/80 hover:text-ivory border-b border-ivory/40 pb-2 self-start">
+          <Link href="/" className="eyebrow text-ivory/80 hover:text-ivory border-b border-ivory/40 pb-2 self-start">
             Explore the 3D worlds ↗
           </Link>
         </div>
