@@ -22,8 +22,8 @@ export default function AboutPage() {
         </p>
         <h2>How drops work</h2>
         <p>
-          Availability on this site comes directly from our store inventory. If something is marked sold out, it is sold
-          out. To hear when the next collection opens, join the list on the{" "}
+          This interactive storefront preview uses illustrative product imagery, prices and availability. No orders
+          or payments are accepted. See what comes next on the{" "}
           <Link href="/next-drop">next drop</Link> page.
         </p>
       </div>
