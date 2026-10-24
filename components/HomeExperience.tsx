@@ -22,20 +22,16 @@ export default function HomeExperience() {
         <MainStudioModel currentIndex={currentIndex} scale={isMobile ? 0.8 : 1} />
       </View>
 
-      <div className="absolute z-10 inset-x-0 bottom-6 md:bottom-12 flex flex-col items-center gap-4 pointer-events-none px-5">
+      <div className="absolute z-10 inset-x-0 bottom-14 md:bottom-16 flex flex-col items-center gap-5 pointer-events-none px-5">
         <p className="text-white/80 md:text-xs text-[10px] font-medium tracking-[0.3em] text-center">
-          EXPLORE THE COLLECTION IN 3D
+          THREE WORLDS · CHOOSE A PIECE · SCROLL TO EXPLORE
         </p>
-        <div className="pointer-events-auto flex items-center flex-wrap justify-center gap-3 mb-2">
-          <Link href="/shop" className="bg-white text-black px-7 py-4 text-[11px] uppercase font-semibold tracking-[.18em] hover:bg-white/85 transition-colors">Explore the drop ↗</Link>
-          <Link href="/lookbook" className="border border-white/50 backdrop-blur-md text-white px-7 py-4 text-[11px] uppercase font-semibold tracking-[.18em] hover:bg-white/10 transition-colors">The lookbook</Link>
-        </div>
         <nav aria-label="Garments" className="pointer-events-auto flex flex-wrap justify-center gap-2">
           {GARMENTS.map((g) => (
             <Link
               key={g.slug}
               href={`/shirts/${g.slug}`}
-              className="eyebrow text-[9px] text-white/80 border border-white/20 px-3 py-2 hover:border-white hover:text-white transition-colors backdrop-blur-sm"
+              className="eyebrow text-[10px] text-white/85 border border-white/25 px-5 py-3 hover:border-white hover:text-white transition-colors backdrop-blur-sm"
             >
               {g.name}
             </Link>
