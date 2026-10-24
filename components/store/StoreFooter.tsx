@@ -1,69 +1,45 @@
 import Link from "next/link";
 
-const COLUMNS = [
-  {
-    title: "Shop",
-    links: [
-      { href: "/shop", label: "Shop all" },
-      { href: "/collections", label: "Collections" },
-      { href: "/shop?sort=newest", label: "New arrivals" },
-      { href: "/cart", label: "Bag" },
-    ],
-  },
-  {
-    title: "Help",
-    links: [
-      { href: "/faq", label: "FAQ" },
-      { href: "/contact", label: "Contact" },
-      { href: "/shipping", label: "Shipping" },
-      { href: "/returns", label: "Returns" },
-      { href: "/account", label: "Account" },
-    ],
-  },
-  {
-    title: "Studio",
-    links: [
-      { href: "/about", label: "About" },
-      { href: "/lookbook", label: "Lookbook" },
-      { href: "/", label: "3D experience" },
-      { href: "/privacy", label: "Privacy" },
-      { href: "/terms", label: "Terms" },
-    ],
-  },
+const STUDIO = [
+  { href: "/", label: "Enter the 3D studio" },
+  { href: "/collections", label: "Three worlds" },
+  { href: "/shop", label: "Shop the three" },
+  { href: "/about", label: "About" },
+];
+const SUPPORT = [
+  { href: "/faq", label: "FAQ" },
+  { href: "/contact", label: "Contact" },
+  { href: "/shipping", label: "Shipping" },
+  { href: "/returns", label: "Returns" },
+  { href: "/privacy", label: "Privacy" },
+  { href: "/terms", label: "Terms" },
 ];
 
 export default function StoreFooter() {
   return (
-    <footer className="border-t border-line mt-24">
-      <div className="mx-auto max-w-[1600px] px-5 md:px-10 py-16 grid gap-12 lg:grid-cols-[1.3fr_2fr]">
-        <div className="max-w-md">
-          <p className="font-display text-2xl tracking-[0.35em]">STRYDE</p>
-          <p className="mt-4 text-sm text-mist leading-6">
-            A studio study of everyday essentials and pieces in motion. Explore the interactive collection.
-          </p>
-          <Link href="/shop" className="btn-ghost mt-6 inline-flex">Browse clothing</Link>
+    <footer className="border-t border-line mt-20">
+      <div className="mx-auto max-w-[1600px] px-5 md:px-10 py-12 flex flex-col lg:flex-row lg:justify-between gap-10">
+        <div>
+          <Link href="/" aria-label="STRYDE home" className="font-display text-xl tracking-[.35em]">STRYDE</Link>
+          <p className="mt-4 text-sm text-mist">Three worlds. One collection.</p>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-8">
-          {COLUMNS.map((col) => (
-            <nav key={col.title} aria-label={col.title}>
-              <p className="eyebrow text-mist mb-5">{col.title}</p>
-              <ul className="space-y-3">
-                {col.links.map((link) => (
-                  <li key={link.href}>
-                    <Link href={link.href} className="text-sm text-ivory/80 hover:text-ivory">
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
+        <nav aria-label="Studio" className="flex flex-wrap items-center gap-x-8 gap-y-4">
+          {STUDIO.map((item) => (
+            <Link key={item.href} href={item.href} className="eyebrow opacity-75 hover:opacity-100">{item.label}</Link>
           ))}
-        </div>
+        </nav>
       </div>
       <div className="border-t border-line">
-        <div className="mx-auto max-w-[1600px] px-5 md:px-10 py-6 flex flex-col sm:flex-row justify-between gap-2 text-[11px] text-mist">
-          <p>© {new Date().getFullYear()} STRYDE</p>
-          <p>Studio preview: imagery and prices are illustrative. No orders or payments are accepted.</p>
+        <div className="mx-auto max-w-[1600px] px-5 md:px-10 py-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
+          <div className="flex flex-wrap gap-x-5 gap-y-3">
+            {SUPPORT.map((item) => (
+              <Link key={item.href} href={item.href} className="text-xs text-mist hover:text-ivory">{item.label}</Link>
+            ))}
+          </div>
+          <div className="text-[11px] text-mist leading-6 lg:text-right">
+            <p>© {new Date().getFullYear()} STRYDE</p>
+            <p>Studio demo only · No orders or payments accepted</p>
+          </div>
         </div>
       </div>
     </footer>
