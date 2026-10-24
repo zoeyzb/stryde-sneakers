@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import clsx from "clsx";
 import { useCart } from "@/components/cart/CartProvider";
 import Price from "@/components/store/Price";
-import WaitlistForm from "@/components/waitlist/WaitlistForm";
+import Link from "next/link";
 import { useWishlist } from "@/lib/useWishlist";
 import type { Product, ProductVariant } from "@/lib/shopify/types";
 
@@ -71,7 +71,7 @@ export default function ProductForm({ product }: { product: Product }) {
           min={variant?.price ?? product.priceRange.minVariantPrice}
           compareAt={variant ? variant.compareAtPrice : product.compareAtPriceRange.maxVariantPrice}
         />
-        <p className="mt-2 text-xs text-mist">Taxes and shipping calculated at checkout.</p>
+        <p className="mt-2 text-xs text-mist">Studio preview — no payment is collected.</p>
       </div>
 
       {productSoldOut && (
@@ -134,12 +134,9 @@ export default function ProductForm({ product }: { product: Product }) {
           <button type="button" disabled className="btn-primary w-full">
             Sold out
           </button>
-          <div>
-            <p className="text-sm text-ivory/85 mb-3">
-              {productSoldOut ? "Notify me if it returns" : `Notify me if ${variant?.title} returns`}
-            </p>
-            <WaitlistForm source="restock" productHandle={product.handle} productTitle={product.title} />
-          </div>
+          <Link href="/next-drop" className="btn-ghost text-center">
+            Explore the next drop
+          </Link>
         </div>
       ) : (
         <div className="flex flex-col gap-3">
