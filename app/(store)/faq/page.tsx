@@ -1,82 +1,33 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import EditorialPage from "@/components/content/EditorialPage";
+import { PageHeading } from "@/components/store/StoreStatus";
 
-export const metadata: Metadata = {
-  title: "FAQ",
-  description: "Answers to common questions about STRYDE orders, sizing, shipping and returns.",
-};
+export const metadata: Metadata = { title: "FAQ", description: "Questions about the STRYDE studio preview." };
 
-const QUESTIONS: { q: string; a: React.ReactNode }[] = [
-  {
-    q: "How do I know if something is in stock?",
-    a: "Availability on every product page comes straight from our store inventory. If a size or piece shows as sold out, it can't be ordered. You can ask to be notified if it returns.",
-  },
-  {
-    q: "Will sold-out pieces come back?",
-    a: "Sometimes, but not always — we don't promise restocks. If you ask to be notified on a product page, we'll send you a single email if it becomes available again.",
-  },
-  {
-    q: "How do I find my size?",
-    a: "Each product page includes fit notes and a size guide where we have them. If you're between sizes, contact us with the piece and your usual size and we'll help.",
-  },
-  {
-    q: "Which payment methods can I use?",
-    a: "Payment options depend on our configured secure checkout provider. Available methods and order totals are shown at checkout before you pay. We do not see or store your card details.",
-  },
-  {
-    q: "How much is shipping and how long does it take?",
-    a: (
-      <>
-        Shipping options, prices and delivery estimates for your address are shown at checkout. See our{" "}
-        <Link href="/shipping">shipping policy</Link> for details.
-      </>
-    ),
-  },
-  {
-    q: "Are taxes and duties included?",
-    a: "Taxes are calculated at checkout based on your shipping address. Any duties for international orders are shown at checkout where they apply.",
-  },
-  {
-    q: "Can I cancel or change my order?",
-    a: (
-      <>
-        <Link href="/contact">Contact us</Link> with your order number as soon as possible. Once an order has shipped it
-        can&apos;t be changed or cancelled, but you can return it under our returns policy.
-      </>
-    ),
-  },
-  {
-    q: "How do returns work?",
-    a: (
-      <>
-        Our <Link href="/returns">returns policy</Link> explains what can be returned and how. You can view each
-        order and its return options from your <Link href="/account">account</Link>.
-      </>
-    ),
-  },
-  {
-    q: "Do I need an account to order?",
-    a: "No. You can check out as a guest. An account lets you see your order history and track deliveries.",
-  },
+const QUESTIONS = [
+  { q: "Can I place an order?", a: "Not in this preview. You can browse, select sizes and add pieces to a demo bag. Checkout ends with a sold-out message and never charges you." },
+  { q: "Are these prices and stock levels real?", a: "No. They illustrate what a working clothing storefront looks like. Photographs are illustrative too." },
+  { q: "Does my bag stay saved?", a: "Yes, within this browser. Your bag and wishlist are kept in local browser storage so you can return to them." },
+  { q: "Can I choose a size?", a: "Yes. Open a product, select XS through XL, and add that variant to your bag. You can adjust quantities or remove it later." },
+  { q: "Can I pay, get shipping, or make a return?", a: "No payment, fulfilment or return service is connected. The demo collects no delivery address or card details." },
+  { q: "What happens when I checkout?", a: "You reach the final Sold Out page, which confirms that no order was placed and no payment was taken." },
 ];
 
 export default function FaqPage() {
   return (
-    <EditorialPage handle="faq" eyebrow="Help" title="FAQ">
+    <div className="mx-auto max-w-3xl px-5 md:px-10">
+      <PageHeading eyebrow="Help / Studio preview" title="FAQ" />
       <div className="border-t border-line">
         {QUESTIONS.map(({ q, a }) => (
           <details key={q} className="group border-b border-line">
             <summary className="flex justify-between gap-6 py-5 cursor-pointer list-none text-sm font-semibold">
-              {q}
-              <span aria-hidden className="text-mist transition-transform group-open:rotate-45">+</span>
+              {q}<span aria-hidden className="text-mist transition-transform group-open:rotate-45">+</span>
             </summary>
-            <div className="pb-6 prose-stryde">
-              <p>{a}</p>
-            </div>
+            <p className="pb-6 text-sm text-ivory/75 leading-7">{a}</p>
           </details>
         ))}
       </div>
-    </EditorialPage>
+      <Link href="/shop" className="btn-ghost mt-10">Explore the shop</Link>
+    </div>
   );
 }
