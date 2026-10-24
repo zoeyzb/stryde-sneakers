@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import clsx from "clsx";
 import { useCart } from "@/components/cart/CartProvider";
 import Price from "@/components/store/Price";
+import SizeGuide from "@/components/product/SizeGuide";
 import Link from "next/link";
 import { useWishlist } from "@/lib/useWishlist";
 import type { Product, ProductVariant } from "@/lib/shopify/types";
@@ -29,7 +30,7 @@ export default function ProductForm({ product }: { product: Product }) {
   const variants = product.variants.nodes;
 
   const initial = useMemo(() => {
-    const fromUrl = variants.find((v) => v.id.endsWith(`/${params.get("variant")}`));
+    const fromUrl = variants.find((v) => v.id.split("/").pop() === params.get("variant"));
     const v = fromUrl ?? variants.find((x) => x.availableForSale) ?? variants[0];
     return Object.fromEntries((v?.selectedOptions ?? []).map((o) => [o.name, o.value])) as Selection;
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -59,6 +60,11 @@ export default function ProductForm({ product }: { product: Product }) {
     }
   }
 
+  async function handleAdd() {
+    if (!variant) return;
+    setAdded(await add(variant.id, 1));
+  }
+
   const saved = wishlist.has(product.handle);
 
   return (
@@ -78,8 +84,7 @@ export default function ProductForm({ product }: { product: Product }) {
         <div className="border border-line px-5 py-5">
           <p className="eyebrow">Sold out</p>
           <p className="mt-2 text-sm text-ivory/75 leading-6">
-            This piece is currently unavailable. Leave your email and we&apos;ll send a single note if it comes back
-            into stock.
+            This archive piece is unavailable in the demo catalogue. Explore the next drop to discover more.
           </p>
         </div>
       )}
@@ -123,6 +128,8 @@ export default function ProductForm({ product }: { product: Product }) {
           </fieldset>
         ))}
 
+      <SizeGuide productType={product.productType} />
+
       {variant && variant.availableForSale && !variant.currentlyNotInStock && (
         <p className="text-xs tracking-widest uppercase text-ivory/75" role="status">
           In stock
@@ -144,10 +151,7 @@ export default function ProductForm({ product }: { product: Product }) {
             type="button"
             className="btn-primary w-full"
             disabled={!variant || pending}
-            onClick={async () => {
-              if (!variant) return;
-              setAdded(await add(variant.id, 1));
-            }}
+            onClick={handleAdd}
           >
             {!variant ? "Select options" : pending ? "Adding…" : "Add to bag"}
           </button>
@@ -174,6 +178,18 @@ export default function ProductForm({ product }: { product: Product }) {
       >
         {saved ? "Saved to wishlist — remove" : "Save to wishlist"}
       </button>
+
+      <div className="fixed bottom-0 inset-x-0 z-30 border-t border-line bg-ink/95 backdrop-blur-md px-4 pt-3 pb-[calc(12px+env(safe-area-inset-bottom))] lg:hidden">
+        <div className="mx-auto max-w-md flex items-center gap-3">
+          <div className="min-w-0 flex-1">
+            <p className="text-xs font-semibold truncate">{product.title}</p>
+            <p className="text-xs text-mist">{variant?.title ?? "Choose size"} · ${variant?.price.amount ?? product.priceRange.minVariantPrice.amount} USD</p>
+          </div>
+          <button type="button" onClick={handleAdd} disabled={productSoldOut || variantSoldOut || !variant || pending} className="btn-primary shrink-0">
+            {productSoldOut || variantSoldOut ? "Sold out" : "Add to bag"}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
