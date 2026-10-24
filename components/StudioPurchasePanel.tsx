@@ -15,12 +15,13 @@ type Props = {
 };
 
 export default function StudioPurchasePanel({ shirtType, onClose, onAdded }: Props) {
-  const { add, error } = useCart();
+  const { add, error, cart } = useCart();
   const panelRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
   const product = DEMO_PRODUCTS.find((piece) => piece.tags.includes("scene:" + shirtType));
   const sizes = product?.detailOptions.find((option) => option.name === "Size")?.optionValues ?? [];
+  const inBag = Boolean(cart?.lines.nodes.some((line) => product?.variants.nodes.some((v) => v.id === line.merchandise.id)));
   const variant = product?.variants.nodes.find(
     (item) => item.selectedOptions.some((option) => option.name === "Size" && option.value === size)
   );
@@ -52,7 +53,7 @@ export default function StudioPurchasePanel({ shirtType, onClose, onAdded }: Pro
   if (!product) return null;
 
   async function handleAdd() {
-    if (!variant || !variant.availableForSale || adding) return;
+    if (!variant || !variant.availableForSale || inBag || adding) return;
     setAdding(true);
     try {
       if (await add(variant.id, 1)) onAdded();
@@ -95,7 +96,7 @@ export default function StudioPurchasePanel({ shirtType, onClose, onAdded }: Pro
             <legend className="eyebrow text-ivory/80 mb-4">Choose your size</legend>
             <div className="grid grid-cols-5 gap-2">
               {sizes.map((option) => {
-                const available = product.variants.nodes.some(
+                const available = !inBag && product.variants.nodes.some(
                   (item) => item.availableForSale && item.selectedOptions.some(
                     (selected) => selected.name === "Size" && selected.value === option.name
                   )
@@ -126,12 +127,13 @@ export default function StudioPurchasePanel({ shirtType, onClose, onAdded }: Pro
           <button
             type="button"
             className="btn-primary mt-8 w-full min-h-14"
-            disabled={!variant || !variant.availableForSale || adding}
+            disabled={!variant || !variant.availableForSale || inBag || adding}
             onClick={handleAdd}
           >
-            {adding ? "Adding…" : !size ? "Choose a size" : "Add to bag"}
+            {inBag ? "Sold out · Already in your bag" : adding ? "Adding…" : !size ? "Choose a size" : "Add to bag"}
           </button>
           {error && <p role="alert" className="mt-3 text-xs text-red-300">{error}</p>}
+          {inBag && <p role="status" className="mt-4 text-xs leading-6 text-ivory/80">This piece is already in your bag. Remove it to choose another size.</p>}
           <p className="mt-5 text-xs leading-6 text-mist">
             Studio concept · Illustrative sizing and pricing. No actual orders or payments are accepted.
           </p>
