@@ -29,6 +29,10 @@ export default async function ShopPage({ searchParams }: { searchParams: SearchP
       <PageHeading eyebrow="STRYDE / Studio preview" title={first(sp.sort) === "newest" ? "New Arrivals" : "Shop"}>
         Explore the current collection, choose a size and add pieces to your bag. This is a demo catalogue; no payment or order is taken.
       </PageHeading>
+      <div className="mb-8 -mt-3 flex flex-wrap items-center justify-between gap-4 border-y border-line py-5">
+        <p className="text-xs text-mist">Editorial imagery is illustrative · Preview prices only</p>
+        <Link href="/lookbook" className="eyebrow text-ivory hover:opacity-65">Discover the lookbook ↗</Link>
+      </div>
       <Suspense>
         <ShopFilters productTypes={getDemoProductTypes()} />
       </Suspense>
