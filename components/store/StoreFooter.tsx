@@ -62,7 +62,7 @@ export default function StoreFooter() {
       <div className="border-t border-line">
         <div className="mx-auto max-w-[1600px] px-5 md:px-10 py-6 flex flex-col sm:flex-row justify-between gap-2 text-[11px] text-mist">
           <p>© {new Date().getFullYear()} STRYDE</p>
-          <p>Secure checkout when the store is connected. Shipping and taxes calculated at checkout.</p>
+          <p>Studio preview: imagery and prices are illustrative. No orders or payments are accepted.</p>
         </div>
       </div>
     </footer>
