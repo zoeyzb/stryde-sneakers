@@ -7,7 +7,7 @@ import { formatMoney } from "@/lib/format";
 import { DEMO_PRODUCTS } from "@/lib/demo/catalog";
 
 export default function CartContents({ onNavigate }: { onNavigate?: () => void }) {
-  const { cart, loaded, error, updateLine, removeLine } = useCart();
+  const { cart, loaded, error, removeLine } = useCart();
   const lines = cart?.lines.nodes ?? [];
 
   if (!loaded) return <p className="py-16 text-center text-sm text-mist">Loading your bag…</p>;
@@ -49,11 +49,7 @@ export default function CartContents({ onNavigate }: { onNavigate?: () => void }
                 </div>
                 <p className="text-xs text-mist">{options}</p>
                 <div className="mt-auto flex items-center justify-between pt-3">
-                  <div className="flex items-center border border-line">
-                    <button type="button" aria-label={`Decrease quantity of ${line.merchandise.product.title}`} className="size-9 text-mist hover:text-ivory" onClick={() => updateLine(line.id, line.quantity - 1)}>−</button>
-                    <span className="w-8 text-center text-sm tabular-nums" aria-live="polite">{line.quantity}</span>
-                    <button type="button" aria-label={`Increase quantity of ${line.merchandise.product.title}`} className="size-9 text-mist hover:text-ivory disabled:opacity-30" disabled={line.quantity >= 1} onClick={() => updateLine(line.id, line.quantity + 1)}>+</button>
-                  </div>
+                  <span className="text-xs text-mist">Quantity · 1</span>
                   <button type="button" className="text-xs text-mist underline underline-offset-4 hover:text-ivory" onClick={() => removeLine(line.id)}>Remove</button>
                 </div>
               </div>
