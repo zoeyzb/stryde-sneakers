@@ -1,10 +1,8 @@
 import Link from "next/link";
 
 const STUDIO = [
-  { href: "/", label: "Enter the 3D studio" },
-  { href: "/collections", label: "Three worlds" },
-  { href: "/shop", label: "Shop the three" },
-  { href: "/about", label: "About" },
+  { href: "/", label: "The collection" },
+  { href: "/about", label: "Our story" },
 ];
 const SUPPORT = [
   { href: "/faq", label: "FAQ" },
@@ -21,7 +19,7 @@ export default function StoreFooter() {
       <div className="mx-auto max-w-[1600px] px-5 md:px-10 py-12 flex flex-col lg:flex-row lg:justify-between gap-10">
         <div>
           <Link href="/" aria-label="STRYDE home" className="font-display text-xl tracking-[.35em]">STRYDE</Link>
-          <p className="mt-4 text-sm text-mist">Three worlds. One collection.</p>
+          <p className="mt-4 text-sm text-mist">Move with intention.</p>
         </div>
         <nav aria-label="Studio" className="flex flex-wrap items-center gap-x-8 gap-y-4">
           {STUDIO.map((item) => (
