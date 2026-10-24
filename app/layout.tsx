@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     template: "%s — STRYDE",
   },
   description:
-    "STRYDE is a luxury streetwear studio. Explore the collection in 3D and shop tees, hoodies, jackets and pants.",
+    "STRYDE is a streetwear concept built around movement, contrast and presence. Discover Graphite, Oxblood and White.",
   openGraph: { siteName: "STRYDE", type: "website" },
 };
 
