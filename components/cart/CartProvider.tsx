@@ -30,10 +30,14 @@ const PRODUCTS_BY_VARIANT = new Map(
 
 function safeEntries(value: unknown): Entry[] {
   if (!Array.isArray(value)) return [];
+  const seenProducts = new Set<string>();
   return value.slice(0, 50).flatMap((item): Entry[] => {
-    if (!item || typeof item.variantId !== "string" || !PRODUCTS_BY_VARIANT.has(item.variantId)) return [];
+    if (!item || typeof item.variantId !== "string") return [];
+    const found = PRODUCTS_BY_VARIANT.get(item.variantId);
+    if (!found || seenProducts.has(found.product.id)) return [];
     const quantity = Number(item.quantity);
     if (!Number.isSafeInteger(quantity) || quantity < 1 || quantity > 20) return [];
+    seenProducts.add(found.product.id);
     return [{ variantId: item.variantId, quantity: 1 }];
   });
 }
