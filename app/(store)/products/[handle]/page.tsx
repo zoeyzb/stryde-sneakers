@@ -39,6 +39,12 @@ export default async function ProductPage({ params }: { params: Params }) {
           {product.collections.nodes[0].title}
         </Link>
       </nav>
+      {scene && (
+        <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-y border-line py-5">
+          <p className="text-xs text-mist">Part of the original three-world 3D collection</p>
+          <Link href={`/shirts/${scene}`} className="eyebrow hover:text-mist">Enter the full scroll experience ↗</Link>
+        </div>
+      )}
       <div className="grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
         <ProductGallery images={product.gallery.nodes} title={product.title} scene={scene} soldOut={!product.availableForSale} />
         <div className="lg:sticky lg:top-24 self-start min-w-0">
@@ -56,12 +62,12 @@ export default async function ProductPage({ params }: { params: Params }) {
               <summary className="py-5 cursor-pointer eyebrow">Fit & sizing</summary>
               <p className="pb-6 text-sm leading-7 text-ivory/80">{product.fit?.value} {product.sizeGuide?.value}</p>
             </details>
-            <p className="mt-6 text-xs text-mist leading-6">Studio preview: product photography is illustrative. No orders or payments are accepted.</p>
+            <p className="mt-6 text-xs text-mist leading-6">Garment imagery is rendered from STRYDE’s own original 3D model. This studio demo accepts no orders or payments.</p>
           </div>
         </div>
       </div>
       <section className="mt-28" aria-labelledby="related-heading">
-        <h2 id="related-heading" className="eyebrow text-mist mb-8">Complete the look</h2>
+        <h2 id="related-heading" className="eyebrow text-mist mb-8">Explore the other worlds</h2>
         <ProductGrid products={related} />
       </section>
       <PreviewReviews handle={product.handle} />
