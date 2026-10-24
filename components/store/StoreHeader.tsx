@@ -7,11 +7,9 @@ import clsx from "clsx";
 import { useCart } from "@/components/cart/CartProvider";
 
 const NAV = [
+  { href: "/collections", label: "3D Collection" },
   { href: "/shop", label: "Shop" },
-  { href: "/collections", label: "Collections" },
-  { href: "/shop?sort=newest", label: "New Arrivals" },
-  { href: "/lookbook", label: "Lookbook" },
-  { href: "/about", label: "About" },
+  { href: "/about", label: "Studio" },
 ];
 
 export function BagButton({ className }: { className?: string }) {
@@ -59,12 +57,6 @@ export default function StoreHeader() {
           </nav>
         </div>
         <div className="flex items-center gap-6">
-          <Link href="/shop#search" className="eyebrow opacity-80 hover:opacity-100 hidden sm:inline">
-            Search
-          </Link>
-          <Link href="/account" className="eyebrow opacity-80 hover:opacity-100 hidden sm:inline">
-            Account
-          </Link>
           <BagButton />
           <button
             type="button"
@@ -79,7 +71,7 @@ export default function StoreHeader() {
       </div>
       {menuOpen && (
         <nav id="mobile-nav" aria-label="Mobile" className="lg:hidden border-t border-line px-5 py-6 flex flex-col gap-5">
-          {[...NAV, { href: "/shop#search", label: "Search" }, { href: "/account", label: "Account" }].map((item) => (
+          {NAV.map((item) => (
             <Link key={item.href} href={item.href} className="eyebrow text-sm">
               {item.label}
             </Link>

@@ -29,10 +29,10 @@ export default function SoldOutPage() {
           </div>
         )}
         <div className="mt-12 flex flex-wrap justify-center gap-4">
-          <Link href="/next-drop" className="btn-primary">Discover what’s next ↗</Link>
-          <Link href="/lookbook" className="btn-ghost">Explore the archive</Link>
+          <Link href="/collections" className="btn-primary">Return to the three worlds ↗</Link>
+          <Link href="/shop" className="btn-ghost">Back to the three pieces</Link>
         </div>
-        <p className="mt-16 text-[10px] tracking-[.24em] uppercase text-mist">End of chapter 001 — beginning of everything else.</p>
+        <p className="mt-16 text-[10px] tracking-[.24em] uppercase text-mist">Three worlds. One studio. Start again whenever you like.</p>
       </section>
     </div>
   );
