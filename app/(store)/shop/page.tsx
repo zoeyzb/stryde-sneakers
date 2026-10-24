@@ -1,49 +1,50 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Suspense } from "react";
 import ProductGrid from "@/components/store/ProductGrid";
-import ShopFilters from "@/components/store/ShopFilters";
-import { PageHeading } from "@/components/store/StoreStatus";
-import { filterDemoProducts, getDemoProductTypes } from "@/lib/demo/catalog";
+import { filterDemoProducts } from "@/lib/demo/catalog";
 
 export const metadata: Metadata = {
-  title: "Shop",
-  description: "Browse the STRYDE studio preview collection.",
+  title: "The Three — Shop",
+  description: "Graphite, Oxblood, White. Explore the three original STRYDE 3D garments.",
 };
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
-const first = (v: string | string[] | undefined) => Array.isArray(v) ? v[0] : v;
+const first = (value: string | string[] | undefined) => Array.isArray(value) ? value[0] : value;
 
 export default async function ShopPage({ searchParams }: { searchParams: SearchParams }) {
   const sp = await searchParams;
-  const products = filterDemoProducts({
-    q: first(sp.q)?.slice(0, 100),
-    type: first(sp.type)?.slice(0, 100),
-    availability: first(sp.availability),
-    scene: first(sp.scene),
-    sort: first(sp.sort),
-  });
+  const scene = first(sp.scene);
+  const selected = scene === "gray" || scene === "sport" || scene === "white";
+  const products = filterDemoProducts({ scene: selected ? scene : undefined, sort: first(sp.sort) });
 
   return (
     <div className="mx-auto max-w-[1600px] px-5 md:px-10">
-      <PageHeading eyebrow="STRYDE / Studio preview" title={first(sp.sort) === "newest" ? "New Arrivals" : "Shop"}>
-        Explore the current collection, choose a size and add pieces to your bag. This is a demo catalogue; no payment or order is taken.
-      </PageHeading>
-      <div className="mb-8 -mt-3 flex flex-wrap items-center justify-between gap-4 border-y border-line py-5">
-        <p className="text-xs text-mist">Editorial imagery is illustrative · Preview prices only</p>
-        <Link href="/lookbook" className="eyebrow text-ivory hover:opacity-65">Discover the lookbook ↗</Link>
-      </div>
-      <Suspense>
-        <ShopFilters productTypes={getDemoProductTypes()} />
-      </Suspense>
-      <div className="mt-10">
-        {products.length ? <ProductGrid products={products} /> : (
-          <div className="py-24 text-center">
-            <p className="eyebrow text-mist">No pieces match your search</p>
-            <Link href="/shop" className="btn-ghost mt-8">Clear filters</Link>
+      <section className="pt-16 md:pt-24 pb-10 md:pb-16">
+        <p className="eyebrow text-mist">STRYDE / Volume 001 / Studio preview</p>
+        <div className="mt-8 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+          <div>
+            <h1 className="font-display text-3xl sm:text-5xl lg:text-7xl uppercase tracking-[.08em] leading-[1.1]">
+              {selected ? "The selected piece." : "Only three."}
+            </h1>
+            <p className="mt-7 max-w-xl text-sm text-ivory/65 leading-7">
+              Graphite. Oxblood. White. Three original 3D garment studies, one focused collection.
+              Enter each interactive world, then select a size if you want to try the demo bag.
+            </p>
           </div>
-        )}
+          <Link href="/collections" className="eyebrow text-ivory/80 hover:text-ivory border-b border-ivory/40 pb-2 self-start">
+            Explore the 3D worlds ↗
+          </Link>
+        </div>
+      </section>
+      <div className="border-t border-line pt-8">
+        <ProductGrid products={products} />
       </div>
+      <p className="mt-12 text-xs text-mist leading-6">
+        The products, sizing and prices are a studio demonstration. No orders or payments are accepted.
+      </p>
+      {selected && (
+        <Link href="/shop" className="mt-8 inline-block eyebrow text-ivory/80 hover:text-ivory">← View all three</Link>
+      )}
     </div>
   );
 }
