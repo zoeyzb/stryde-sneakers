@@ -1,174 +1,125 @@
 import type { Collection, CollectionSummary, Money, Product, ProductCard, ShopifyImage } from "@/lib/shopify/types";
 
 /**
- * Curated, clearly illustrative STRYDE preview catalogue.
- * No inventory, fulfilment or payment service is connected.
+ * The three actual STRYDE 3D garment worlds, and nothing else.
+ * Images are captures of our existing 3D models, not third-party stock photos.
+ * This is a studio demo: no live inventory, fulfilment or payment is connected.
  */
 const money = (amount: number): Money => ({ amount: amount.toFixed(2), currencyCode: "USD" });
-const photo = (id: string, alt: string): ShopifyImage => ({
-  url: `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1200&q=85`,
-  altText: alt,
-  width: 1200,
-  height: 1500,
+const image = (slug: string, title: string): ShopifyImage => ({
+  url: `/garments/${slug}.png`,
+  altText: `STRYDE ${title} — render of the actual interactive studio garment`,
+  width: 580,
+  height: 515,
 });
+
+type Scene = "gray" | "sport" | "white";
+type World = "graphite" | "oxblood" | "white";
 
 type Piece = {
   handle: string;
+  idIndex: number;
   title: string;
-  type: string;
+  scene: Scene;
+  world: World;
   price: number;
   description: string;
-  photo: string;
-  second: string;
-  scene?: "white" | "gray" | "sport";
-  collection: "essentials" | "atelier";
-  soldOut?: boolean;
 };
 
 const PIECES: Piece[] = [
   {
-    handle: "signature-heavyweight-tee",
-    title: "Signature Heavyweight Tee",
-    type: "Tees",
-    price: 58,
-    description: "A substantial cotton jersey tee with a deliberately relaxed silhouette. The everyday starting point.",
-    photo: "photo-1521572163474-6864f9cf17ab",
-    second: "photo-1503342217505-b0a15ec3261c",
-    scene: "white",
-    collection: "essentials",
-  },
-  {
     handle: "graphite-studio-tee",
-    title: "Graphite Studio Tee",
-    type: "Tees",
-    price: 64,
-    description: "A boxy, clean-lined tee in deep graphite. Heavy jersey and an easy drop shoulder.",
-    photo: "photo-1621388986228-ad0bba5b1b52",
-    second: "photo-1523381210434-271e8be1f52b",
+    idIndex: 1,
+    title: "Graphite Studio Layer",
     scene: "gray",
-    collection: "essentials",
-  },
-  {
-    handle: "studio-zip-hoodie",
-    title: "Studio Zip Hoodie",
-    type: "Hoodies",
-    price: 128,
-    description: "A roomy everyday layer with considered proportions and a clean finish.",
-    photo: "photo-1556821840-3a63f95609a7",
-    second: "photo-1578681994506-b8f463449011",
-    collection: "essentials",
-  },
-  {
-    handle: "utility-overshirt",
-    title: "Utility Overshirt",
-    type: "Jackets",
-    price: 152,
-    description: "Workwear-inspired structure softened for daily wear. Layer over a simple tee.",
-    photo: "photo-1591047139829-d91aecb6caea",
-    second: "photo-1544923246-77307dd654cb",
-    collection: "atelier",
-  },
-  {
-    handle: "relaxed-cargo-trouser",
-    title: "Relaxed Cargo Trouser",
-    type: "Pants",
-    price: 118,
-    description: "A relaxed utility trouser with movement in mind, balanced by a tailored waist.",
-    photo: "photo-1473966968600-fa801b869a1a",
-    second: "photo-1511196044526-5cb3bcb7071b",
-    collection: "atelier",
-  },
-  {
-    handle: "archive-washed-jacket",
-    title: "Archive Washed Jacket",
-    type: "Jackets",
-    price: 188,
-    description: "A washed outer layer from the studio archive. Presented as a sold-out piece.",
-    photo: "photo-1544923246-77307dd654cb",
-    second: "photo-1591047139829-d91aecb6caea",
-    collection: "atelier",
-    soldOut: true,
+    world: "graphite",
+    price: 64,
+    description: "A deep graphite garment with a red STRYDE signature. Explore its proportions, texture and atmosphere through the original scroll-driven 3D experience.",
   },
   {
     handle: "sport-studio-tee",
-    title: "Sport Studio Tee",
-    type: "Tees",
-    price: 72,
-    description: "A sport-inspired studio tee with bold energy and an easy everyday fit. Explore the matching interactive 3D concept.",
-    photo: "photo-1523381210434-271e8be1f52b",
-    second: "photo-1503342217505-b0a15ec3261c",
+    idIndex: 6,
+    title: "Oxblood Studio Layer",
     scene: "sport",
-    collection: "essentials",
+    world: "oxblood",
+    price: 72,
+    description: "A dark garment in STRYDE's Oxblood world. The red-lit environment, movement and original 3D material study are the focus.",
+  },
+  {
+    handle: "signature-heavyweight-tee",
+    idIndex: 0,
+    title: "White Studio Layer",
+    scene: "white",
+    world: "white",
+    price: 58,
+    description: "The lightest STRYDE world: a white garment with a restrained graphic and an immersive monochrome studio experience.",
   },
 ];
 
 const SIZES = ["XS", "S", "M", "L", "XL"] as const;
-export const DEMO_PRODUCTS: Product[] = PIECES.map((p, index) => {
-  const firstImage = photo(p.photo, `Editorial preview for ${p.title}`);
-  const secondImage = photo(p.second, `Alternate editorial preview for ${p.title}`);
+export const DEMO_PRODUCTS: Product[] = PIECES.map((p) => {
+  const modelImage = image(p.world, p.title);
   const variants = SIZES.map((size, sizeIndex) => ({
-    id: `demo-variant-${index}-${sizeIndex}`,
+    id: `demo-variant-${p.idIndex}-${sizeIndex}`,
     title: size,
-    sku: `STRYDE-${index + 1}-${size}`,
-    availableForSale: !p.soldOut,
+    sku: `STRYDE-${p.world.toUpperCase()}-${size}`,
+    availableForSale: true,
     currentlyNotInStock: false,
     price: money(p.price),
     compareAtPrice: null,
     selectedOptions: [{ name: "Size", value: size }],
-    image: firstImage,
+    image: modelImage,
   }));
+  const collectionTitle = p.world === "oxblood" ? "Oxblood" : p.world === "graphite" ? "Graphite" : "White";
   return {
-    id: `demo-product-${index}`,
+    id: `demo-product-${p.idIndex}`,
     handle: p.handle,
     title: p.title,
-    productType: p.type,
-    tags: p.scene ? [`scene:${p.scene}`] : [],
-    availableForSale: !p.soldOut,
+    productType: "Studio Layer",
+    tags: [`scene:${p.scene}`],
+    availableForSale: true,
     priceRange: { minVariantPrice: money(p.price), maxVariantPrice: money(p.price) },
     compareAtPriceRange: { maxVariantPrice: money(p.price) },
-    featuredImage: firstImage,
-    hoverImages: { nodes: [firstImage, secondImage] },
+    featuredImage: modelImage,
+    hoverImages: { nodes: [modelImage] },
     options: [{ name: "Size", optionValues: SIZES.map((name) => ({ name })) }],
     description: p.description,
     descriptionHtml: `<p>${p.description}</p>`,
     vendor: "STRYDE",
     seo: { title: p.title, description: p.description },
-    gallery: { nodes: [firstImage, secondImage] },
+    gallery: { nodes: [modelImage] },
     detailOptions: [{
-      id: `size-option-${index}`,
+      id: `size-option-${p.idIndex}`,
       name: "Size",
-      optionValues: SIZES.map((name) => ({
-        id: `size-${index}-${name}`, name, swatch: null,
-      })),
+      optionValues: SIZES.map((name) => ({ id: `size-${p.idIndex}-${name}`, name, swatch: null })),
     }],
     variants: { nodes: variants },
-    fabric: { value: p.type === "Pants" ? "Cotton-rich utility twill." : "Premium cotton blend." },
-    care: { value: "Cold gentle wash. Lay flat or hang to dry." },
-    fit: { value: "Relaxed fit. Choose your usual size for the intended silhouette." },
-    sizeGuide: { value: "XS / S / M / L / XL — standard unisex sizing." },
-    details: { value: "STRYDE studio preview collection. Imagery is illustrative; no orders are taken." },
-    collections: { nodes: [{ id: `demo-collection-${p.collection}`, handle: p.collection, title: p.collection === "essentials" ? "Everyday Essentials" : "Studio Atelier" }] },
+    fabric: { value: "A 3D design study; final fabrication has not been specified." },
+    care: { value: "Care instructions will follow an actual release." },
+    fit: { value: "The interactive silhouette is illustrative; no final manufactured fit is claimed." },
+    sizeGuide: { value: "XS / S / M / L / XL — illustrative demo sizing." },
+    details: { value: "Part of a three-world interactive 3D studio preview. No real orders or payments." },
+    collections: { nodes: [{ id: `demo-collection-${p.world}`, handle: p.world, title: collectionTitle }] },
   };
 });
 
-export const DEMO_COLLECTIONS: CollectionSummary[] = [
-  {
-    id: "demo-collection-essentials",
-    handle: "essentials",
-    title: "Everyday Essentials",
-    description: "Elevated layers with an everyday point of view.",
-    image: DEMO_PRODUCTS[0].featuredImage,
-    products: { nodes: DEMO_PRODUCTS.filter((p) => p.collections.nodes.some((c) => c.handle === "essentials")) },
-  },
-  {
-    id: "demo-collection-atelier",
-    handle: "atelier",
-    title: "Studio Atelier",
-    description: "Utility-led silhouettes and pieces from the archive.",
-    image: DEMO_PRODUCTS[3].featuredImage,
-    products: { nodes: DEMO_PRODUCTS.filter((p) => p.collections.nodes.some((c) => c.handle === "atelier")) },
-  },
-];
+const COLLECTION_COPY: Record<World, string> = {
+  graphite: "A study in shadow, material and red accents.",
+  oxblood: "The collection's most charged environment, in deep red.",
+  white: "Quiet proportions in a bright, minimal world.",
+};
+
+export const DEMO_COLLECTIONS: CollectionSummary[] = DEMO_PRODUCTS.map((p) => {
+  const handle = p.collections.nodes[0].handle as World;
+  return {
+    id: `demo-collection-${handle}`,
+    handle,
+    title: p.collections.nodes[0].title,
+    description: COLLECTION_COPY[handle],
+    image: p.featuredImage,
+    products: { nodes: [p] },
+  };
+});
 
 export function getDemoProduct(handle: string): Product | null {
   return DEMO_PRODUCTS.find((product) => product.handle === handle) ?? null;
@@ -196,18 +147,16 @@ export function filterDemoProducts(filter: DemoFilter, source: ProductCard[] = D
     if (filter.scene && !p.tags.includes(`scene:${filter.scene}`)) return false;
     return true;
   });
-  if (filter.sort === "price-asc") products.sort((a, b) => Number(a.priceRange.minVariantPrice.amount) - Number(b.priceRange.minVariantPrice.amount));
-  if (filter.sort === "price-desc") products.sort((a, b) => Number(b.priceRange.minVariantPrice.amount) - Number(a.priceRange.minVariantPrice.amount));
+  if (filter.sort === "price-asc") products.sort((a,b) => Number(a.priceRange.minVariantPrice.amount)-Number(b.priceRange.minVariantPrice.amount));
+  if (filter.sort === "price-desc") products.sort((a,b) => Number(b.priceRange.minVariantPrice.amount)-Number(a.priceRange.minVariantPrice.amount));
   if (filter.sort === "newest") products.reverse();
-  if (filter.sort === "title") products.sort((a, b) => a.title.localeCompare(b.title));
-  
+  if (filter.sort === "title") products.sort((a,b) => a.title.localeCompare(b.title));
   return products;
 }
 
 export function getDemoCollection(handle: string, sort?: string): Collection | null {
   const summary = DEMO_COLLECTIONS.find((c) => c.handle === handle);
   if (!summary) return null;
-  const products = filterDemoProducts({ sort }, DEMO_PRODUCTS.filter((p) => p.collections.nodes.some((c) => c.handle === handle)));
   return {
     id: summary.id,
     handle: summary.handle,
@@ -216,6 +165,6 @@ export function getDemoCollection(handle: string, sort?: string): Collection | n
     descriptionHtml: `<p>${summary.description}</p>`,
     seo: { title: summary.title, description: summary.description },
     image: summary.image,
-    products: { nodes: products, filters: [], pageInfo: { hasNextPage: false, endCursor: null } },
+    products: { nodes: filterDemoProducts({ sort }, summary.products.nodes), filters: [], pageInfo: { hasNextPage: false, endCursor: null } },
   };
 }
