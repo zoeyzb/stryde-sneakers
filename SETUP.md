@@ -148,25 +148,9 @@ Checkout is Shopify's hosted checkout. This app never sees card data.
 - **Going live.** **Turn test mode off before launch**, and never leave test
   mode enabled on the live store.
 
-## 8. Marking a collection sold out
+## 8. Normal retail availability
 
-Sold-out state is real inventory, not a flag in this app. To sell out a
-collection:
-
-```bash
-npm run shopify:inventory -- current-collection            # dry run: lists every change
-npm run shopify:inventory -- current-collection --confirm  # sets available to 0
-```
-
-The script changes stock levels in Shopify, so review the dry run first.
-
-To restock, set the quantity in Shopify, or on a dev store use
-`--quantity N --confirm`. Purchase buttons re-enable automatically, and
-subscribers are emailed if webhooks and Resend are set up.
-
-When every piece in the current collection is unavailable, the home page says
-so. Any collection page whose pieces are all sold out shows "The Collection Is
-Unavailable", with the next-drop sign-up.
+STRYDE is a normal online clothing store. Do not force the current collection to zero inventory. Make each product and variant purchasable only when it has genuine available stock. If an individual size or product is unavailable, the site shows a sold-out state for that specific item. Keep the rest of the store open for shopping. The homepage and main navigation should always lead to the shop, not a sold-out campaign. Restock notifications are optional.
 
 ## 9. Before launch
 
@@ -178,5 +162,4 @@ Unavailable", with the next-drop sign-up.
 - [ ] A restock email was received by a test subscriber
 - [ ] Rights to the 3D models, environment textures and soundtrack are confirmed
       (see "Assets and licensing" in the README)
-- [ ] `vercel.json` currently disables automatic Git deployments; change that
-      only when you intend to deploy
+- [ ] `vercel.json` permits normal Git deployments

@@ -47,7 +47,13 @@ export default function ProductCard({
             )}
           />
         )}
-        {!product.availableForSale && <SoldOutLabel className="absolute left-3 top-3" />}
+        {!product.availableForSale ? (
+          <SoldOutLabel className="absolute left-3 top-3" />
+        ) : (
+          <span className="absolute left-3 top-3 bg-ink/85 text-ivory px-3 py-2 text-[10px] tracking-[0.18em] uppercase">
+            Available
+          </span>
+        )}
       </div>
       <div className="pt-4 flex justify-between gap-4">
         <div className="min-w-0">

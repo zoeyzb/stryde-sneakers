@@ -22,7 +22,7 @@ const QUESTIONS: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: "Which payment methods can I use?",
-    a: "Payment is handled by Shopify's secure checkout. The methods offered depend on your country and are shown at checkout before you pay. We never see or store your card details.",
+    a: "Payment options depend on our configured secure checkout provider. Available methods and order totals are shown at checkout before you pay. We do not see or store your card details.",
   },
   {
     q: "How much is shipping and how long does it take?",

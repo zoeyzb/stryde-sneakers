@@ -73,7 +73,7 @@ function Help() {
       <div className="border border-line p-5">
         <p className="eyebrow mb-3">Returns</p>
         <p>
-          Open an order&apos;s status page to see its details and any return options Shopify offers for it. Our{" "}
+          Open an order&apos;s status page to see its details and any available return options. Our{" "}
           <Link href="/returns" className="underline underline-offset-4">returns policy</Link> explains eligibility.
         </p>
       </div>
@@ -146,8 +146,8 @@ export default async function AccountPage({
         <div className="border border-line p-8 max-w-lg">
           {loadError && <p role="alert" className="mb-4 text-sm text-red-300">We couldn&apos;t load your account. Please sign in again.</p>}
           <p className="text-sm text-ivory/80 leading-6">
-            Sign in with your email to see your orders, track deliveries and start returns. Shopify sends you a one-time
-            code — no password needed.
+            Sign in with your email to see your orders, track deliveries and start returns. A one-time sign-in
+            code is emailed to you — no password needed.
           </p>
           <a href="/account/login" className="btn-primary mt-6">
             Sign in
@@ -156,7 +156,7 @@ export default async function AccountPage({
       ) : hosted ? (
         <div className="border border-line p-8 max-w-lg">
           <p className="text-sm text-ivory/80 leading-6">
-            Orders, tracking and returns are managed in your Shopify customer account.
+            View your orders, shipping updates, and returns in your customer account.
           </p>
           <a href={hosted} className="btn-primary mt-6">
             Go to my account
@@ -166,7 +166,7 @@ export default async function AccountPage({
         <div className="border border-line p-8 max-w-lg">
           <p className="eyebrow text-mist">Not connected</p>
           <p className="mt-3 text-sm text-ivory/80 leading-6">
-            Customer accounts will be available once the store&apos;s Shopify account is connected.
+            Customer accounts will be available once customer account services are connected.
           </p>
         </div>
       )}

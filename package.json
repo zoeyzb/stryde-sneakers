@@ -12,8 +12,7 @@
     "start:mock": "SHOPIFY_STORE_DOMAIN=mock.shop next start",
     "typecheck": "tsc --noEmit",
     "test:e2e": "node scripts/e2e/storefront.mjs",
-    "shopify:metafields": "node --env-file-if-exists=.env.local scripts/shopify/setup-metafields.mjs",
-    "shopify:inventory": "node --env-file-if-exists=.env.local scripts/shopify/set-collection-inventory.mjs"
+    "shopify:metafields": "node --env-file-if-exists=.env.local scripts/shopify/setup-metafields.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

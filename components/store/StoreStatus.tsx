@@ -4,10 +4,10 @@ import WaitlistForm from "@/components/waitlist/WaitlistForm";
 export function NotConnected({ what = "The catalogue" }: { what?: string }) {
   return (
     <div className="border border-line px-6 py-16 text-center">
-      <p className="eyebrow text-mist">Store not connected</p>
+      <p className="eyebrow text-mist">Catalogue not available yet</p>
       <p className="mt-4 text-sm text-ivory/80 max-w-md mx-auto leading-6">
-        {what} will appear here once this site is connected to the STRYDE Shopify store. Nothing can be
-        purchased until then.
+        {what} will appear when live products and inventory are connected.
+        Purchasing is unavailable until the catalogue is ready.
       </p>
     </div>
   );

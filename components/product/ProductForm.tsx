@@ -40,7 +40,7 @@ export default function ProductForm({ product }: { product: Product }) {
 
   const variant = variants.find((v) => v.selectedOptions.every((o) => selection[o.name] === o.value)) ?? null;
   const productSoldOut = !product.availableForSale;
-  const variantSoldOut = !!variant && !variant.availableForSale;
+  const variantSoldOut = !!variant && (!variant.availableForSale || variant.currentlyNotInStock);
 
   function choose(name: string, value: string) {
     const next = { ...selection, [name]: value };
@@ -123,6 +123,12 @@ export default function ProductForm({ product }: { product: Product }) {
           </fieldset>
         ))}
 
+      {variant && variant.availableForSale && !variant.currentlyNotInStock && (
+        <p className="text-xs tracking-widest uppercase text-ivory/75" role="status">
+          In stock
+        </p>
+      )}
+
       {productSoldOut || variantSoldOut ? (
         <div className="flex flex-col gap-4">
           <button type="button" disabled className="btn-primary w-full">
@@ -148,9 +154,6 @@ export default function ProductForm({ product }: { product: Product }) {
           >
             {!variant ? "Select options" : pending ? "Adding…" : "Add to bag"}
           </button>
-          {variant?.currentlyNotInStock && (
-            <p className="text-xs text-mist">Not in stock right now — orders for this option ship once it is restocked.</p>
-          )}
           {error && !pending && (
             <p role="alert" className="text-sm text-red-300">
               {error}

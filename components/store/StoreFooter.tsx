@@ -1,5 +1,4 @@
 import Link from "next/link";
-import WaitlistForm from "@/components/waitlist/WaitlistForm";
 
 const COLUMNS = [
   {
@@ -7,7 +6,7 @@ const COLUMNS = [
     links: [
       { href: "/shop", label: "Shop all" },
       { href: "/collections", label: "Collections" },
-      { href: "/next-drop", label: "Next drop" },
+      { href: "/shop?sort=newest", label: "New arrivals" },
       { href: "/cart", label: "Bag" },
     ],
   },
@@ -39,9 +38,9 @@ export default function StoreFooter() {
         <div className="max-w-md">
           <p className="font-display text-2xl tracking-[0.35em]">STRYDE</p>
           <p className="mt-4 text-sm text-mist leading-6">
-            Hear about the next drop first. One email when it opens — no countdowns, no noise.
+            Everyday essentials and statement pieces. Explore our interactive collection and discover what is available.
           </p>
-          <WaitlistForm source="next-drop" compact className="mt-6" />
+          <Link href="/shop" className="btn-ghost mt-6 inline-flex">Browse clothing</Link>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-8">
           {COLUMNS.map((col) => (
@@ -63,7 +62,7 @@ export default function StoreFooter() {
       <div className="border-t border-line">
         <div className="mx-auto max-w-[1600px] px-5 md:px-10 py-6 flex flex-col sm:flex-row justify-between gap-2 text-[11px] text-mist">
           <p>© {new Date().getFullYear()} STRYDE</p>
-          <p>Payments, shipping and taxes are handled securely by Shopify checkout.</p>
+          <p>Secure checkout when the store is connected. Shipping and taxes calculated at checkout.</p>
         </div>
       </div>
     </footer>

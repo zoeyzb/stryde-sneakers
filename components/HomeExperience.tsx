@@ -6,9 +6,7 @@ import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { GARMENTS } from "@/lib/garments";
 
-export type HomeCollectionStatus = "available" | "sold-out" | "unknown";
-
-export default function HomeExperience({ status }: { status: HomeCollectionStatus }) {
+export default function HomeExperience() {
   const isMobile = useMediaQuery({ maxWidth: 400 });
   const [currentIndex, setCurrentIndex] = useState(1);
   const handlePrev = () => {
@@ -25,14 +23,9 @@ export default function HomeExperience({ status }: { status: HomeCollectionStatu
       </View>
 
       <div className="absolute z-10 inset-x-0 bottom-12 md:bottom-14 flex flex-col items-center gap-4 pointer-events-none px-5">
-        {status === "sold-out" ? (
-          <div className="text-center">
-            <p className="font-display text-[10px] md:text-xs tracking-[0.4em] text-white">THE COLLECTION IS UNAVAILABLE</p>
-            <p className="mt-2 text-[10px] tracking-[0.2em] text-white/60">EVERY PIECE HAS SOLD OUT</p>
-          </div>
-        ) : (
-          <p className="text-white/80 md:text-xs text-[10px] font-medium tracking-[0.3em]">SELECT A PIECE TO EXPLORE</p>
-        )}
+        <p className="text-white/80 md:text-xs text-[10px] font-medium tracking-[0.3em] text-center">
+          EXPLORE THE COLLECTION IN 3D
+        </p>
         <nav aria-label="Garments" className="pointer-events-auto flex flex-wrap justify-center gap-2">
           {GARMENTS.map((g) => (
             <Link
@@ -44,10 +37,10 @@ export default function HomeExperience({ status }: { status: HomeCollectionStatu
             </Link>
           ))}
           <Link
-            href={status === "sold-out" ? "/next-drop" : "/shop"}
+            href="/shop"
             className="eyebrow text-[9px] bg-white text-black px-4 py-2 hover:bg-white/85 transition-colors"
           >
-            {status === "sold-out" ? "Join the next drop" : "Shop the collection"}
+            Shop the collection
           </Link>
         </nav>
       </div>

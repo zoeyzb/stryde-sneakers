@@ -1,8 +1,6 @@
 # STRYDE
 
-A luxury streetwear store with a scroll-driven 3D homepage, powered by a headless
-Shopify backend. Catalogue, inventory, cart, checkout, payments, taxes, shipping,
-orders and customer accounts all live in Shopify; this app presents them.
+STRYDE is an independent contemporary-clothing e-commerce website with an interactive 3D collection. Products can be purchased when available in real inventory. The app currently implements a headless commerce connection; real payments require connecting a store account and an eligible payment processor. The STRYDE brand is not a Shopify-branded shop.
 
 - **Home (`/`, `/shirts/[slug]`)** — the three-garment 3D experience (React Three
   Fiber, drei, GSAP ScrollTrigger). Every scene ends in a link into the store.
@@ -52,7 +50,6 @@ Never point `SHOPIFY_STORE_DOMAIN` at `mock.shop` in production.
 | `npm run lint` / `typecheck` | ESLint / TypeScript |
 | `npm run test:e2e -- <url> <out-dir>` | Browser smoke test |
 | `npm run shopify:metafields` | Creates the `stryde.*` product metafield definitions |
-| `npm run shopify:inventory -- <collection> [--quantity N] [--confirm]` | Sets a collection's available inventory (dry run unless `--confirm`) |
 
 ## Structure
 
