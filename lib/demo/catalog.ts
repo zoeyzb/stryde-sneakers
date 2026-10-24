@@ -89,6 +89,17 @@ const PIECES: Piece[] = [
     collection: "atelier",
     soldOut: true,
   },
+  {
+    handle: "sport-studio-tee",
+    title: "Sport Studio Tee",
+    type: "Tees",
+    price: 72,
+    description: "A sport-inspired studio tee with bold energy and an easy everyday fit. Explore the matching interactive 3D concept.",
+    photo: "photo-1523381210434-271e8be1f52b",
+    second: "photo-1503342217505-b0a15ec3261c",
+    scene: "sport",
+    collection: "essentials",
+  },
 ];
 
 const SIZES = ["XS", "S", "M", "L", "XL"] as const;
@@ -147,7 +158,7 @@ export const DEMO_COLLECTIONS: CollectionSummary[] = [
     title: "Everyday Essentials",
     description: "Elevated layers with an everyday point of view.",
     image: DEMO_PRODUCTS[0].featuredImage,
-    products: { nodes: DEMO_PRODUCTS.slice(0, 3) },
+    products: { nodes: DEMO_PRODUCTS.filter((p) => p.collections.nodes.some((c) => c.handle === "essentials")) },
   },
   {
     id: "demo-collection-atelier",
@@ -155,7 +166,7 @@ export const DEMO_COLLECTIONS: CollectionSummary[] = [
     title: "Studio Atelier",
     description: "Utility-led silhouettes and pieces from the archive.",
     image: DEMO_PRODUCTS[3].featuredImage,
-    products: { nodes: DEMO_PRODUCTS.slice(3) },
+    products: { nodes: DEMO_PRODUCTS.filter((p) => p.collections.nodes.some((c) => c.handle === "atelier")) },
   },
 ];
 
