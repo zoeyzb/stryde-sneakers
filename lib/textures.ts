@@ -71,9 +71,9 @@ export const environmentPaths = {
 };
 
 export const videoTextures = {
-  white: "/textures/white/third/adidas.mp4",
-  gray: "/textures/gray/third/adidas.mp4",
-  sport: "/textures/sport/third/adidas.mp4",
+  white: "/textures/white/third/stryde-film.mp4",
+  gray: "/textures/gray/third/stryde-film.mp4",
+  sport: "/textures/sport/third/stryde-film.mp4",
 };
 
 //Image path => useTexture

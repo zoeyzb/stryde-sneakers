@@ -39,7 +39,7 @@ const ScrollIndicator = ({ shirtType }: { shirtType: ShirtType }) => {
   return (
     <div
       className={clsx(
-        "fixed flex flex-col items-center z-10 top-4/5 place-self-center gap-5 transition-opacity duration-500",
+        "fixed flex flex-col items-center z-10 top-4/5 place-self-center gap-5 transition-opacity duration-500 pointer-events-none motion-reduce:hidden",
         isScrolling ? "opacity-0" : "opacity-100"
       )}
     >
@@ -70,10 +70,10 @@ const ScrollIndicator = ({ shirtType }: { shirtType: ShirtType }) => {
         />
       </div>
       <div
-        className={
-          (clsx("md:text-sm text-xs tracking-wider"),
-          shirtType === "white" ? "text-black" : "text-white")
-        }
+        className={clsx(
+          "md:text-sm text-xs tracking-wider",
+          shirtType === "white" ? "text-black" : "text-white"
+        )}
       >
         SCROLL TO EXPLORE
       </div>

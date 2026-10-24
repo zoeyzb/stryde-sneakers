@@ -15,9 +15,11 @@ import {
 import Masking from "./Masking";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { useRouter } from "next/navigation";
 
 const ThirdModel = ({ shirtType }: { shirtType: ShirtType }) => {
   const isMobile = useMediaQuery({ maxWidth: 1024 });
+  const router = useRouter();
 
   const stencil = useMask(1);
   const maskRef = useRef<THREE.Mesh>(null);
@@ -30,7 +32,6 @@ const ThirdModel = ({ shirtType }: { shirtType: ShirtType }) => {
 
   const envMap = useShirtEnvCube(shirtType);
   const video = useShirtVideoTexture(shirtType);
-  console.log(envMap);
   useGSAP(() => {
     if (!groupRef.current || !maskRef.current) return;
     gsap
@@ -50,10 +51,14 @@ const ThirdModel = ({ shirtType }: { shirtType: ShirtType }) => {
   const getTextColor = () => shirtColors[shirtType]?.text ?? "black";
   const getWallColor = () => shirtColors[shirtType]?.wall ?? "white";
 
-  const handleButtonClick = useCallback((e: ThreeEvent<MouseEvent>) => {
-    e.stopPropagation();
-    window.open("https://www.google.com", "_blank");
-  }, []);
+  const handleButtonClick = useCallback(
+    (e: ThreeEvent<MouseEvent>) => {
+      e.stopPropagation();
+      document.body.style.cursor = "auto";
+      router.push(`/shop?scene=${shirtType}`);
+    },
+    [router, shirtType]
+  );
   return (
     <group>
       <Masking ref={maskRef} />
@@ -125,7 +130,9 @@ const ThirdModel = ({ shirtType }: { shirtType: ShirtType }) => {
               <meshBasicMaterial color={getTextColor()} {...stencil} />
             </mesh>
             <Text
-              fontSize={0.035}
+              font="/fonts/Syncopate-Bold.ttf"
+              fontSize={0.026}
+              letterSpacing={0.08}
               anchorX={"center"}
               anchorY={"middle"}
               position={[0, 0, 0.03]}

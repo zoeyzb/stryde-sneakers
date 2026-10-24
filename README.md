@@ -1,148 +1,82 @@
-Adapted from the original 3D apparel template by Ali-Sanati. Original assets and licenses require review before commercial reuse.
+# STRYDE
 
-# STRYDE — Interactive Performance Apparel Concept
+STRYDE is an independent contemporary-clothing e-commerce website with an interactive 3D collection. Products can be purchased when available in real inventory. The app currently implements a headless commerce connection; real payments require connecting a store account and an eligible payment processor. The STRYDE brand is not a Shopify-branded shop.
 
+- **Home (`/`, `/shirts/[slug]`)** — the three-garment 3D experience (React Three
+  Fiber, drei, GSAP ScrollTrigger). Every scene ends in a link into the store.
+- **Store (`/shop`, `/collections`, `/products/[handle]`, `/cart`, `/account`, …)** —
+  plain HTML pages without three.js, so shopping never waits on an animation.
 
-<div style="display: flex; flex-direction: column; width: 100%; gap: 20px; align-items: center;"> 
-  <img src="https://github.com/user-attachments/assets/1d49ff99-c1a9-4495-9a56-f9c4ec38e346" alt="Live Demo" style="width: 100%; height: auto; max-width: 100%; border-radius: 8px;" /> 
-  <img src="https://github.com/user-attachments/assets/80a9dabc-71b7-48c9-a106-44e0f8748b34" alt="Main Model" style="width: 100%; height: auto; max-width: 100%; border-radius: 8px;" /> 
-  <img src="https://github.com/user-attachments/assets/65c17bb5-a012-42c5-842e-f25c2a751f69" alt="All Models" style="width: 100%; height: auto; max-width: 100%; border-radius: 8px;" />
-</div>
+See **[SETUP.md](./SETUP.md)** for connecting a Shopify store and what has to be
+configured outside this repository.
 
+## Running locally
 
-A polished, scroll-animated **3D landing page** built with Next.js, React Three Fiber, Three.js, and GSAP—designed to hit Awwwards-level polish.
-
----
-
-## 📚 Table of Contents
-
-- [Features](#-features)
-- [Project Structure](#-project-structure)
-- [Getting Started](#-getting-started)
-- [What You’ll Learn](#-what-you'll-learn)
-- [Assets](#-assets)
-- [Contributing](#-contributing)
-- [Contact Me](#-contact-me)
-- [Like This Project?](#-like-this-project)
-
----
-
-## ✨ Features
-
-- 🔥 3D visuals powered by **React Three Fiber** and **Drei**
-- ⚡ Smooth transitions and scroll-based animations using **Framer Motion**
-- 🎨 Clean, responsive UI with **TailwindCSS**
-- 💌 Working contact form using **EmailJS**
-- 🧱 Beautiful UI enhancements with **Aceternity UI** and **Magic UI**
-- 🚀 Lightning-fast development with **Vite**
-
----
-
-## 📁 Project Structure
+Requires Node.js 20+.
 
 ```bash
-app/
- ├── shirts/[slug]/page.tsx   # Dynamic product routes
- ├── layout.tsx               # Root layout
- ├── page.tsx                 # Main landing page
-components/
- ├── Header.tsx / Footer.tsx  # UI components
- ├── Scene.tsx / Rig.tsx      # 3D scene setup
- ├── ScrollIndicator.tsx      # UI + animation helper
- ├── LoadingSkeleton.tsx      # Custom loader
- ├── FirstGrayModel.tsx       # 3D product models
- └── ViewCanvas.tsx           # Three.js canvas wrapper
-lib/
- ├── colors.ts                # Theme colors
- ├── material.ts              # Reusable materials
- ├── patchThreeLoadingManager.ts # Preloading manager
- ├── useFirstAnimation.ts     # Custom animation hook
- └── useTextures.ts           # Texture loading helper
-public/
- ├── icons/                   # Static icons
- ├── models/                  # 3D models
- ├── test/                    # Misc assets
- └── textures/                # Texture assets
-```
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Node.js ≥ 15.x  
-- npm or Yarn or pnpm  
-- Basic familiarity with React / Three.js  
-
-### Installation
-
-```bash
-git clone https://github.com/Ali-Sanati/awwwards-adidas.git
-cd awwwards-adidas
 npm install
-```
-
-### Development
-
-```bash
+cp .env.example .env.local   # fill in your Shopify credentials
 npm run dev
 ```
-Open http://localhost:3000.
 
-### Production Build
+Without credentials, the store pages explain that the store isn't connected
+yet; nothing is invented.
+
+### Test configuration (no credentials)
+
+`mock.shop` is Shopify's public demo backend. It serves a real Storefront and
+Cart API over test data, and its checkout is a mock — no payment is taken.
 
 ```bash
-npm run build
-npm run start
+npm run dev:mock                     # or: npm run build:mock && npm run start:mock
+npm run test:e2e -- http://localhost:3000 /tmp/stryde-e2e
 ```
----
 
-## 🧠 What You’ll Learn / Why Use This
+The end-to-end script (`scripts/e2e/storefront.mjs`, puppeteer-core + Chrome)
+checks the 3D scenes, listing, filters, sold-out labels, add/update/remove,
+discount rejection, cart persistence, the checkout hand-off, sold-out product
+pages, the waitlist error path and mobile layout. Override products with
+`E2E_IN_STOCK_HANDLE`, `E2E_SOLD_OUT_HANDLE`, `E2E_COLLECTION_WITH_SOLD_OUT`, and
+set `E2E_EXPECT_WAITLIST=saved` when Admin storage is configured.
 
-This repo demonstrates how to blend modern UI and immersive 3D in a production-grade, high-performance web experience. If you're aiming to:
+Never point `SHOPIFY_STORE_DOMAIN` at `mock.shop` in production.
 
-- Build portfolio-level interactive websites
-- Level up in React + Three.js
-- Learn real-world optimizations (preload, lazy load, smooth transitions)
-- Understand scalable file structure and clean code
-  
-…then this is a solid starting point.
+## Scripts
 
----
+| Command | What it does |
+| --- | --- |
+| `npm run dev` / `build` / `start` | Next.js app |
+| `npm run lint` / `typecheck` | ESLint / TypeScript |
+| `npm run test:e2e -- <url> <out-dir>` | Browser smoke test |
+| `npm run shopify:metafields` | Creates the `stryde.*` product metafield definitions |
 
-## 🔗 Assets
+## Structure
 
-Assets used in the project can be found [here](https://drive.google.com/file/d/1NjKulhW4iobgekZAK3YWm8EyeLxL3mOZ/view?usp=drive_link)
+```
+app/(experience)/        3D homepage + garment scenes (global WebGL canvas)
+app/(store)/             shop, collections, product, cart, account, content pages
+app/actions/cart.ts      server actions for the Shopify cart
+app/api/waitlist         waitlist / back-in-stock sign-up (Admin API)
+app/api/contact          contact form (Resend)
+app/api/webhooks/shopify cache revalidation + restock emails
+lib/shopify/             Storefront, Cart and Admin API clients and queries
+lib/customer/            Customer Account API OAuth + session
+components/              3D scenes, store UI, cart, product page
+scripts/assets/          how the STRYDE textures and film were produced
+scripts/shopify/         admin setup scripts
+scripts/e2e/             browser smoke test
+```
 
----
+## Assets and licensing
 
-## 📖 Contributing
+The 3D scenes started from a third-party open-source template. Retailer branding
+has been removed from the textures, models and films and replaced with original
+STRYDE artwork (see `scripts/assets/`), but the underlying garment models,
+environment textures and soundtrack (`public/main-optimized.mp3`) came with that
+template and **no licence was published for them**. Confirm rights or replace
+them before commercial use. Earlier commits in this repository's history still
+contain the original branded files.
 
-Contributions are welcome! If you spot a bug, want to add a new feature, or improve documentation:
-
-1. Fork the repo
-2. Create a branch feature/your-feature or fix/issue-name
-3. Make your changes & test
-4. Submit a Pull Request
-
-Please keep PRs focused, include tests or screenshots when possible, and describe your change.
-
-## 📬 Contact Me
-
-If you have questions or ideas, feel free to open an issue or reach me
-
-[![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://www.instagram.com/ali.sanatidev/reels/) 
-[![Static Badge](https://img.shields.io/badge/Youtube-%23FF0033?style=flat&logo=youtube)](https://www.youtube.com/channel/UCZhtUWTtk3bGJiMPN9T4HWA)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ali-sanati/) 
-[![TikTok](https://img.shields.io/badge/tiktok-black?style=flat&logo=TikTok)](https://www.tiktok.com/@ali_sanati_dev)
-[![X](https://img.shields.io/badge/X-black?style=flat&logo=x
-)](https://x.com/Ali_Sanati_Dev)
-
-Thanks for checking it out! 🙌
-
----
-
-## ⭐ Like This Project?
-
-Star the repo and [subscribe](https://www.youtube.com/channel/UCZhtUWTtk3bGJiMPN9T4HWA??sub_confirmation=1) to the YouTube channel for more dev content!
+- Syncopate (display typeface) — Apache License 2.0, see `public/fonts/LICENSE-Syncopate.txt`.
+- Mulish (body typeface) — SIL Open Font License 1.1, served via `next/font/google`.
