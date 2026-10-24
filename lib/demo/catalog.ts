@@ -43,7 +43,7 @@ const PIECES: Piece[] = [
     type: "Tees",
     price: 64,
     description: "A boxy, clean-lined tee in deep graphite. Heavy jersey and an easy drop shoulder.",
-    photo: "photo-1509631179647-0177331693ae",
+    photo: "photo-1621388986228-ad0bba5b1b52",
     second: "photo-1523381210434-271e8be1f52b",
     scene: "gray",
     collection: "essentials",
