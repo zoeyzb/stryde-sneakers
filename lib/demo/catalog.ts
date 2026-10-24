@@ -165,6 +165,6 @@ export function getDemoCollection(handle: string, sort?: string): Collection | n
     descriptionHtml: `<p>${summary.description}</p>`,
     seo: { title: summary.title, description: summary.description },
     image: summary.image,
-    products: { nodes: filterDemoProducts({ sort }, summary.products.nodes), filters: [], pageInfo: { hasNextPage: false, endCursor: null } },
+    products: { nodes: filterDemoProducts({ sort }, DEMO_PRODUCTS.filter((p) => p.collections.nodes.some((collection) => collection.handle === handle))), filters: [], pageInfo: { hasNextPage: false, endCursor: null } },
   };
 }
