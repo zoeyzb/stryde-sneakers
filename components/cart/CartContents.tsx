@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "./CartProvider";
 import { formatMoney } from "@/lib/format";
+import { DEMO_PRODUCTS } from "@/lib/demo/catalog";
 
 export default function CartContents({ onNavigate }: { onNavigate?: () => void }) {
   const { cart, loaded, error, updateLine, removeLine } = useCart();
@@ -15,7 +16,7 @@ export default function CartContents({ onNavigate }: { onNavigate?: () => void }
     return (
       <div className="py-16 text-center">
         <p className="eyebrow text-mist">Your bag is empty</p>
-        <Link href="/shop" onClick={onNavigate} className="btn-ghost mt-8">Explore the shop</Link>
+        <Link href="/" onClick={onNavigate} className="btn-ghost mt-8">Explore the three pieces</Link>
         {error && <p role="alert" className="mt-6 text-sm text-red-300">{error}</p>}
       </div>
     );
@@ -27,10 +28,11 @@ export default function CartContents({ onNavigate }: { onNavigate?: () => void }
         {lines.map((line) => {
           const image = line.merchandise.image ?? line.merchandise.product.featuredImage;
           const options = line.merchandise.selectedOptions.map((o) => o.value).join(" / ");
+          const scene = DEMO_PRODUCTS.find((product) => product.handle === line.merchandise.product.handle)?.tags.find((tag) => tag.startsWith("scene:"))?.slice(6) ?? "gray";
           return (
             <li key={line.id} className="flex gap-4 py-5">
               <Link
-                href={`/products/${line.merchandise.product.handle}`}
+                href={`/shirts/${scene}`}
                 onClick={onNavigate}
                 className="relative w-20 aspect-[4/5] shrink-0 bg-ink-2 overflow-hidden"
               >
@@ -39,7 +41,7 @@ export default function CartContents({ onNavigate }: { onNavigate?: () => void }
               <div className="flex-1 min-w-0 flex flex-col gap-1">
                 <div className="flex justify-between gap-3">
                   <Link
-                    href={`/products/${line.merchandise.product.handle}`}
+                    href={`/shirts/${scene}`}
                     onClick={onNavigate}
                     className="text-sm font-semibold hover:underline underline-offset-4"
                   >{line.merchandise.product.title}</Link>
@@ -50,7 +52,7 @@ export default function CartContents({ onNavigate }: { onNavigate?: () => void }
                   <div className="flex items-center border border-line">
                     <button type="button" aria-label={`Decrease quantity of ${line.merchandise.product.title}`} className="size-9 text-mist hover:text-ivory" onClick={() => updateLine(line.id, line.quantity - 1)}>−</button>
                     <span className="w-8 text-center text-sm tabular-nums" aria-live="polite">{line.quantity}</span>
-                    <button type="button" aria-label={`Increase quantity of ${line.merchandise.product.title}`} className="size-9 text-mist hover:text-ivory disabled:opacity-30" disabled={line.quantity >= 20} onClick={() => updateLine(line.id, line.quantity + 1)}>+</button>
+                    <button type="button" aria-label={`Increase quantity of ${line.merchandise.product.title}`} className="size-9 text-mist hover:text-ivory disabled:opacity-30" disabled={line.quantity >= 1} onClick={() => updateLine(line.id, line.quantity + 1)}>+</button>
                   </div>
                   <button type="button" className="text-xs text-mist underline underline-offset-4 hover:text-ivory" onClick={() => removeLine(line.id)}>Remove</button>
                 </div>
